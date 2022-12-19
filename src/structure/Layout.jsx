@@ -1,4 +1,4 @@
-import { ProSidebarProvider, Sidebar } from "react-pro-sidebar";
+/* import { ProSidebarProvider, Sidebar } from "react-pro-sidebar"; */
 import { Outlet } from "react-router-dom";
 import Sidebars from "../components/Sidebars";
 import Topbar from "../components/Topbar";

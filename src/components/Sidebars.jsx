@@ -34,131 +34,53 @@ const Sidebars = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
-  return (
-    <Box
-      sx={{
-        "& .pro-sidebar-inner": {
-          background: "#E2E2E2 !important",
-        },
-        "& .pro-icon-wrapper": {
-          backgroundColor: "transparent !important",
-        },
-        "& .pro-inner-item": {
-          padding: "5px 35px 5px 20px !important",
-        },
-        "& .pro-inner-item:hover": {
-          color: "#C117BC !important",
-        },
-        "& .pro-menu-item.active": {
-          color: "#C117BC !important",
-        },
-      }}
-    >
-      <div collapsed={isCollapsed}>
-        <div iconShape="square">
-          {/* LOGO AND MENU ICON */}
-          <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
-            style={{
-              margin: "0px 0 0px 0",
-              color: "#16161A",
-            }}
-          >
-            {!isCollapsed && (
-              <Box
-                display="flex"
-                justifyContent="space-between"
-                alignItems="center"
-                ml="15px"
-                paddingTop="0px"
-              >
-                <Box display="flex" justifyContent="center" alignItems="center">
-                  <img
-                    alt="profile-user"
-                    width="125px"
-                    height="90px"
-                    src={imageLogo}
-                    style={{ cursor: "pointer", borderRadius: "50%" }}
-                  />
-                </Box>
-                <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
-                  <MenuOutlinedIcon />
-                </IconButton>
-              </Box>
-            )}
-          </MenuItem>
+  const [open, setOpen] = useState(true);
+  const Menus = [
+    { title: "Dashboard", src: "Chart_fill" },
+    { title: "Drivers", src: "Chat",gap: true },
+    { title: "Owners", src: "User" },
+    { title: "Cars", src: "Calendar" },
+    { title: "Invoices", src: "Search",gap: true },
+    { title: "Settings", src: "Chart" },
+  ];
 
-          {!isCollapsed && (
-            <Box mb="25px">
-              <Box textAlign="center">
-                <Typography variant="h7" color={"#16161A"}>
-                  info@niceniceglobal.com
-                </Typography>
-              </Box>
-            </Box>
-          )}
-          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            <Item
-              title="Dashboard"
-              to={Routing.Dashboard.path}
-              icon={<HomeOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Typography
-              variant="h6"
-              color={"#16161A"}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Data
-            </Typography>
-            <Item
-              title="Drivers"
-              to={Routing.Drivers.path}
-              icon={<VerifiedUser />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Owners"
-              to="/owners"
-              icon={<VerifiedUserOutlined />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Cars"
-              to="/cars"
-              icon={<CarRental />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Transactions"
-              to="/invoices"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Typography
-              variant="h6"
-              color={"#16161A"}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Help
-            </Typography>
-            <Item
-              title="Settings"
-              to="/settings"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-          </Box>
-        </div>
-      </div>
-    </Box>
+  return (
+    <div
+    className={` ${
+      open ? "w-72" : "w-20 "
+    } bg-gray-100 h-screen p-5  pt-8 relative duration-300`}
+  >
+    <img
+      src={imageLogo}
+      className={`absolute cursor-pointer -right-3 top-9 w-7 border-dark-purple
+       border-2 rounded-full  ${!open && "rotate-180"}`}
+      onClick={() => setOpen(!open)}
+    />
+    <div className="flex gap-x-4 items-center">
+      <img
+        src={imageLogo}
+        className={`cursor-pointer px-10 duration-500 ${
+          open && "rotate-[360deg]"
+        }`}
+      />
+    </div>
+    <ul className="pt-6">
+      {Menus.map((Menu, index) => (
+        <li
+          key={index}
+          className={`flex  rounded-md p-2 cursor-pointer hover:bg-pink-100 text-sm items-center gap-x-4 
+          ${Menu.gap ? "mt-9" : "mt-2"} ${
+            index === 0 && "bg-light-white"
+          } `}
+        >
+          <img src={`./src/assets/${Menu.src}.png`} />
+          <span className={`${!open && "hidden"} origin-left duration-200`}>
+            {Menu.title}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
   );
 };
 
