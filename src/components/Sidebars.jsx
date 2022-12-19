@@ -60,7 +60,7 @@ const Sidebars = () => {
       <img
         src={imageLogo}
         className={`cursor-pointer px-10 duration-500 ${
-          open && "rotate-[360deg]"
+          open
         }`}
       />
     </div>

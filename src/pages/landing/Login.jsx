@@ -64,7 +64,7 @@ const Login = () => {
               <label>Username</label>
               <input
                 type="text"
-                id="email"
+                id="user"
                 ref={userRef}
                 autoComplete="on"
                 onChange={(e) => setUser(e.target.value)}
@@ -77,7 +77,7 @@ const Login = () => {
               <label>Password</label>
               <input
                 type="password"
-                id="password"
+                id="pwd"
                 autoComplete="off"
                 onChange={(e) => setPwd(e.target.value)}
                 value={pwd}
