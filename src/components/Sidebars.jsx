@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, MenuItem, ProSidebar } from "react-pro-sidebar";
+/* import { Menu, MenuItem, ProSidebar } from "react-pro-sidebar"; */
 import { Box, IconButton, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -16,7 +16,7 @@ import {Routing} from "../Routing"
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   return (
-    <MenuItem
+    <nav
       active={selected === title}
       style={{
         color: "#16161A",
@@ -26,7 +26,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
     >
       <Typography>{title}</Typography>
       <Link to={to} />
-    </MenuItem>
+    </nav>
   );
 };
 
@@ -54,8 +54,8 @@ const Sidebars = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed}>
-        <Menu iconShape="square">
+      <div collapsed={isCollapsed}>
+        <div iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -156,8 +156,8 @@ const Sidebars = () => {
               setSelected={setSelected}
             />
           </Box>
-        </Menu>
-      </ProSidebar>
+        </div>
+      </div>
     </Box>
   );
 };
