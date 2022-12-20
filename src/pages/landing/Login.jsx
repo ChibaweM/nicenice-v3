@@ -88,11 +88,11 @@ const Login = () => {
             <button className="border rounded-md w-full my-5 py-2 bg-pinkVariant hover:bg-fuchsia-700 text-white">
               Sign In
             </button>
-            <div className="flex justify-between">
+            {/* <div className="flex justify-between">
               <p className="flex items-center">
                 <input className="mr-2" type="checkbox" /> Remember Me
               </p>
-            </div>
+            </div> */}
           </form>
           <p
             ref={errRef}

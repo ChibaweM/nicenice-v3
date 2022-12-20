@@ -28,11 +28,20 @@ const Dashboard = () => {
     });
   });
 
+  const GET_DRIVERS_URL1 = "/api/v1/dashboard/all-transactions";
+  const [drivers1, setDrivers1] = useState([]);
+
+  useEffect(() => {
+    axios.get(GET_DRIVERS_URL1).then(({ data }) => {
+      setDrivers1(data);
+    });
+  });
+
   return (
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+         <Header title="Dashboard" subtitle="Welcome to your dashboard" />
 
         <Box>
           <Button
@@ -142,7 +151,7 @@ const Dashboard = () => {
           backgroundColor={"#F5F6F8"}
         >
           <StatBox
-            title="0"
+            title={drivers.niceNiceDeals}
             subtitle="Deals"
             progress="0.80"
             increase="+43%"
@@ -157,7 +166,7 @@ const Dashboard = () => {
           backgroundColor={"#F5F6F8"}
         >
           <StatBox
-            title={drivers.niceNiceDeals}
+            title={drivers.webUsers}
             subtitle="Active Website Users"
             progress="0.80"
             increase="+43%"
@@ -172,7 +181,7 @@ const Dashboard = () => {
           backgroundColor={"#F5F6F8"}
         >
           <StatBox
-            title="75"
+            title={drivers.mobileUsers}
             subtitle="Active Mobile Users"
             progress="0.80"
             increase="+43%"
@@ -193,6 +202,35 @@ const Dashboard = () => {
               Recent Transactions
             </Typography>
           </Box>
+          {!drivers && drivers1.map((trans, i) => (
+            <Box
+              key={`${trans.id}-${i}`}
+              display="flex"
+              justifyContent="space-between"
+              alignItems="center"
+              borderBottom={`4px solid`}
+              p="15px"
+            >
+              <Box>
+                <Typography
+                  variant="h5"
+                  fontWeight="600"
+                >
+                  {trans.id}
+                </Typography>
+                <Typography>
+                  {trans.transaction}
+                </Typography>
+              </Box>
+              <Box >{trans.date}</Box>
+              <Box
+                p="5px 10px"
+                borderRadius="4px"
+              >
+                {trans.amount}
+              </Box>
+            </Box>
+          ))}
         </Box>
 
         {/* ROW 2 */}
@@ -208,7 +246,7 @@ const Dashboard = () => {
           >
             {/*  <ProgressCircle size="125" /> */}
             <Typography variant="h5" sx={{ mt: "15px" }} color={"#C117BC"}>
-              R25,242 Revenue Generated
+              {drivers.totalRevenue} Revenue Generated
             </Typography>
             <Typography>Includes extra misc expenditures and costs</Typography>
           </Box>
