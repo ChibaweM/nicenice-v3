@@ -58,6 +58,13 @@ const Login = () => {
     <section className="bg-primary w-full text-black">
       <div className="grid grid-cols-1 sm:grid-cols-2 pt-0 w-full">
         <div className="flex flex-col justify-center">
+        <p
+            ref={errRef}
+            className={errMsg ? "errmsg" : "offscreen"}
+            aria-live="assertive"
+          >
+            {errMsg}
+          </p>
           <form onSubmit={(e) => handleSubmit(e)} className="max-w-[400px] w-full mx-auto bg-white p-4">
             <h2 className="text-4xl font-bold text-center py-6">Emails Login</h2>
             <div className="flex flex-col py-2">
@@ -94,13 +101,6 @@ const Login = () => {
               </p>
             </div> */}
           </form>
-          <p
-            ref={errRef}
-            className={errMsg ? "errmsg" : "offscreen"}
-            aria-live="assertive"
-          >
-            {errMsg}
-          </p>
         </div>
 
         <div className="hidden sm:block py-10 mx-10">
