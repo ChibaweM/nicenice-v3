@@ -66,7 +66,7 @@ const Login = () => {
             {errMsg}
           </p>
           <form onSubmit={(e) => handleSubmit(e)} className="max-w-[400px] w-full mx-auto bg-white p-4">
-            <h2 className="text-4xl font-bold text-center py-6">Emails Login</h2>
+            <h2 className="text-4xl font-bold text-center py-6">Email Login</h2>
             <div className="flex flex-col py-2">
               <label>Username</label>
               <input

@@ -6,7 +6,7 @@ import axios from "../../assets/axios";
 import { Button, Typography, InputBase } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { mockDataTeam } from "../../data/mockData";
-import { Document, Page } from "react-pdf";
+/* import { Document, Page } from "react-pdf"; */
 
 const Drivers = () => {
   const GET_DRIVERS_URL = "/api/v1/admin/drivers";
@@ -15,12 +15,12 @@ const Drivers = () => {
     setDrivers(data);
   });
 
-  const [numPages, setNumPages] = useState(null);
+  /* const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
-  }
+  } */
 
   const [loadId, setloadID] = useState({
     age: "",
@@ -185,9 +185,9 @@ const Drivers = () => {
                       >
                         <Page pageNumber={pageNumber} />
                       </Document> */}
-                      <p>
+                     {/*  <p>
                         Page {pageNumber} of {numPages}
-                      </p>
+                      </p> */}
                     </Box>
                   </Box>
                 </Box>
