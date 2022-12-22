@@ -7,14 +7,13 @@ import { Button, Typography, InputBase } from "@mui/material";
 import { Add, RemoveRedEye } from "@mui/icons-material";
 
 const Drivers = () => {
-  
   const style = {
     position: "absolute",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 1000,
-    height: 600,
+    width: 800,
+    height: 200,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -45,9 +44,29 @@ const Drivers = () => {
   const handleCredit = () => {
     handleClose();
     axios
-      .put(`/api/v1/admin/${loadId.id}/load-credit`, {
+      .put(`/api/v1/admin/${loadId.id + 1}/load-credit`, {
         query: loadedCredits,
       }) //retriving the response
+      .then((res) => {
+        return res.json();
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          console.log("No Server Response");
+        } else if (err.response?.status === 400) {
+          console.log("Missing Username or Password");
+        } else if (err.response?.status === 401) {
+          console.log("Unauthorized");
+        } else {
+          console.log("Login Failed");
+        }
+      });
+  };
+
+  const handleApprove = () => {
+    handleClose();
+    axios
+      .put(`/api/v1/admin/${loadId.id}/approve-driver`) //retriving the response
       .then((res) => {
         return res.json();
       })
@@ -137,47 +156,50 @@ const Drivers = () => {
                     <Box
                       display="flex"
                       borderRadius="3px"
-                      backgroundColor={"#C117BC"}
+                      color={"#C117BC"}
                       marginTop="20px"
+                      marginBottom="20px"
                     >
-                      <Typography>Owner Documents</Typography>
+                      <Typography>Owner's Details</Typography>
                     </Box>
                   </Box>
-                  <Typography
-                    id="modal-modal-title"
-                    variant="h5"
-                    component="h2"
-                    marginBottom="20px"
-                  >
-                    Driver Details
-                  </Typography>
-
-                  <Typography>
-                    Please add an amount to credit the user
-                  </Typography>
-                  <Box
-                    display="flex"
-                    borderRadius="3px"
-                    backgroundColor={"#E2E2E2"}
-                    marginTop="10px"
-                  >
-                    <InputBase
-                      sx={{ ml: 2, flex: 1 }}
-                      placeholder="Add Credit amount"
-                      onChange={(e) => handleChange(e)}
-                    />
-                  </Box>
-                  <Box display="flex" justifyContent="right">
-                    <Box
-                      display="flex"
-                      borderRadius="3px"
-                      backgroundColor={"#C117BC"}
-                      marginTop="20px"
-                      justifyContent="right"
-                    >
-                      <Button onClick={handleCredit}>
-                        <Typography color="#16161A">Add</Typography>
-                      </Button>
+                  <Box className="grid grid-cols-1 sm:grid-cols-2 pt-0 w-full">
+                    <Box justifyContent="left" marginBottom="5px">
+                      <Typography>
+                        Phone number: {loadId.phoneNumber}
+                      </Typography>
+                      <Typography>
+                        User's Credit: {loadId.creditBalance}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Box display="flex" justifyContent="space-between" >
+                        <Box justifyContent="left">
+                          <Typography>Approve this driver?</Typography>
+                        </Box>
+                        <Box
+                          display="flex"
+                          borderRadius="3px"
+                          backgroundColor={"#green"}
+                          marginTop="10px"
+                          justifyContent="right"
+                        >
+                          <Button onClick={() => handleApprove()}>
+                            <Typography color="#16161A">Yes</Typography>
+                          </Button>
+                        </Box>
+                        <Box
+                          display="flex"
+                          borderRadius="3px"
+                          backgroundColor={"#C117BC"}
+                          marginTop="10px"
+                          justifyContent="right"
+                        >
+                          <Button onClick={() => handleClose()}>
+                            <Typography color="#16161A">No</Typography>
+                          </Button>
+                        </Box>
+                      </Box>
                     </Box>
                   </Box>
                 </Box>

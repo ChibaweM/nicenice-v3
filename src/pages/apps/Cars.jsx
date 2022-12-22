@@ -1,13 +1,12 @@
-import { Box, Button } from "@mui/material";
+import { Box, Button, Modal, Typography, InputBase } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { mockDataCars } from "../../data/mockData";
 import Header from "../../components/Header";
-import { Add, Delete, Edit } from "@mui/icons-material";
+import { Add, RemoveRedEye } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import axios from "../../assets/axios";
 
 const Cars = () => {
-  const GET_DRIVERS_URL = "/api/v1/admin/cars";
+  const GET_DRIVERS_URL = "/api/v1/dashboard/car-table";
   const [drivers, setDrivers] = useState([]);
 
   useEffect(() => {
@@ -15,6 +14,24 @@ const Cars = () => {
       setDrivers(data);
     });
   });
+  const [loadId, setloadID] = useState({});
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+
+  
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    height: 500,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
 
   const handleEdit = (e) => {
     e.preventdefault();
@@ -32,25 +49,42 @@ const Cars = () => {
       flex: 1,
     },
     {
-      field: "platform",
-      headerName: "platform",
-      flex: 1,
-    },
-    {
-      field: "owner",
-      headerName: "Owner",
-      flex: 1,
-    },
-    {
-      field: "totalCredits",
+      field: "year",
       headerName: "Credits",
       flex: 1,
     },
     {
-      field: "action",
-      headerName: "Status",
+      field: "city",
+      headerName: "platform",
       flex: 1,
-      renderCell: ({ row: { Status } }) => {
+    },
+    {
+      field: "weeklyTarget",
+      headerName: "Owner",
+      flex: 1,
+    },
+    {
+      field: "depositRequired",
+      headerName: "Deposit",
+      renderCell: ({ row: { depositRequired } }) => {
+        return (
+          <>
+            <Box>
+              {depositRequired === true && (
+                <Typography className="text-green-400">Yes</Typography>
+              )}
+              {depositRequired === false && (
+                <Typography className="text-red-600">No</Typography>
+              )}
+            </Box>
+          </>
+        );
+      },
+    },
+    {
+      field: "action",
+      headerName: "Action",
+      renderCell: () => {
         return (
           <>
             <Box
@@ -58,15 +92,118 @@ const Cars = () => {
               display="flex"
               justifyContent="center"
               borderRadius="4px"
+              className="hover:bg-pinkVariant"
             >
-              <Button onClick={(e) => handleEdit(e)}>
-                <Edit />
-              </Button>
-            </Box>
-            <Box display="flex" justifyContent="center" borderRadius="4px">
               <Button>
-                <Delete />
+                <RemoveRedEye className="text-black" />
               </Button>
+
+             <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <Box display="flex">
+                    <Box
+                      display="flex"
+                      borderRadius="3px"
+                      color={"#C117BC"}
+                      marginTop="20px"
+                      marginBottom="20px"
+                    >
+                      <Typography>Owner's Details</Typography>
+                    </Box>
+                  </Box>
+                  <Box className="grid grid-cols-1 sm:grid-cols-2 pt-0 w-full">
+                    <Box justifyContent="left" marginBottom="5px">
+                      <Typography>
+                        Phone number: {loadId.phoneNumber}
+                      </Typography>
+                      <Typography>
+                        User's Credit: {loadId.creditBalance}
+                      </Typography>
+                    </Box>
+                    <Box>
+                      <Box>
+                        <Box>
+                          <Typography>Add Credit to user</Typography>
+                        </Box>
+                        <Box
+                          display="flex"
+                          borderRadius="3px"
+                          backgroundColor={"#E2E2E2"}
+                          marginTop="10px"
+                        >
+                          <InputBase
+                            sx={{ ml: 2, flex: 1 }}
+                            placeholder="Add Credit amount"
+                            onChange={(e) => handleChange(e)}
+                          />
+                        </Box>
+                      </Box>
+                      <Box display="flex" justifyContent="right">
+                        <Box
+                          display="flex"
+                          borderRadius="3px"
+                          backgroundColor={"#C117BC"}
+                          marginTop="20px"
+                          justifyContent="right"
+                        >
+                          <Button onClick={() => handleCredit()}>
+                            <Typography color="#16161A">Add</Typography>
+                          </Button>
+                        </Box>
+                      </Box>
+                    </Box>
+                  </Box>
+                  <Box display="flex">
+                    <Typography>
+                      <Box justifyContent="left" marginBottom="5px">
+                        <Typography>
+                          Phone number: {loadId.phoneNumber}
+                        </Typography>
+                        <Typography>
+                          User's Credit: {loadId.creditBalance}
+                        </Typography>
+                      </Box>
+                      <Box>
+                        <Box>
+                          <Box>
+                            <Typography>Add Credit to user</Typography>
+                          </Box>
+                          <Box
+                            display="flex"
+                            borderRadius="3px"
+                            backgroundColor={"#E2E2E2"}
+                            marginTop="10px"
+                          >
+                            <InputBase
+                              sx={{ ml: 2, flex: 1 }}
+                              placeholder="Add Credit amount"
+                              onChange={(e) => handleChange(e)}
+                            />
+                          </Box>
+                        </Box>
+                        <Box display="flex" justifyContent="right">
+                          <Box
+                            display="flex"
+                            borderRadius="3px"
+                            backgroundColor={"#C117BC"}
+                            margin="20px"
+                            justifyContent="right"
+                          >
+                            <Button onClick={() => handleCredit()}>
+                              <Typography color="#16161A">Add</Typography>
+                            </Button>
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Typography>
+                  </Box>
+                </Box>
+              </Modal>
             </Box>
           </>
         );
@@ -120,7 +257,7 @@ const Cars = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataCars} columns={columns} />
+        <DataGrid rows={drivers} columns={columns} />
       </Box>
     </Box>
   );
