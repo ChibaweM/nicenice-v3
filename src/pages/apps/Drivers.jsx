@@ -68,7 +68,7 @@ const Drivers = () => {
     axios
       .put(`/api/v1/admin/${loadId.id}/approve-driver`) //retriving the response
       .then((res) => {
-        return res.json();
+        return setDrivers(...res.data());
       })
       .catch((err) => {
         if (!err?.response) {
