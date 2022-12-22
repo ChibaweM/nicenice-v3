@@ -2,7 +2,7 @@ import { Box, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { mockDataCars } from "../../data/mockData";
 import Header from "../../components/Header";
-import {  Delete, Edit } from "@mui/icons-material";
+import { Add, Delete, Edit } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import axios from "../../assets/axios";
 
@@ -14,7 +14,7 @@ const Cars = () => {
     axios.get(GET_DRIVERS_URL).then(({ data }) => {
       setDrivers(data);
     });
-  }); 
+  });
 
   const handleEdit = (e) => {
     e.preventdefault();
@@ -48,7 +48,7 @@ const Cars = () => {
     },
     {
       field: "action",
-      headerName: "Action",
+      headerName: "Status",
       flex: 1,
       renderCell: ({ row: { Status } }) => {
         return (
@@ -76,7 +76,24 @@ const Cars = () => {
 
   return (
     <Box m="20px">
-      <Header title="Cars" subtitle="Manage Cars" />
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Header title="Cars" subtitle="Manage Cars" />
+        <Box>
+          <Button
+            sx={{
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              background: "#E2E2E2",
+              color: "#C117BC",
+            }}
+          >
+            <Add/>
+            {/*  <DownloadOutlinedIcon sx={{ mr: "10px" }} /> */}
+            Add Car
+          </Button>
+        </Box>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"

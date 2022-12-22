@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 /* import { mockTransactions } from "../../data/mockData"; */
 /* import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
- */ 
+ */
 import Header from "../../components/Header";
 import StatBox from "../../components/StatBox";
 /* import ProgressCircle from "../../components/ProgressCircle";
@@ -41,7 +41,7 @@ const Dashboard = () => {
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-         <Header title="Dashboard" subtitle="Welcome to your dashboard" />
+        <Header title="Dashboard" subtitle="Welcome to your dashboard" />
 
         <Box>
           <Button
@@ -202,35 +202,28 @@ const Dashboard = () => {
               Recent Transactions
             </Typography>
           </Box>
-          {!drivers && drivers1.map((trans, i) => (
-            <Box
-              key={`${trans.id}-${i}`}
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              borderBottom={`4px solid`}
-              p="15px"
-            >
-              <Box>
-                <Typography
-                  variant="h5"
-                  fontWeight="600"
-                >
-                  {trans.id}
-                </Typography>
-                <Typography>
-                  {trans.transaction}
-                </Typography>
-              </Box>
-              <Box >{trans.date}</Box>
+          {drivers &&
+            drivers1.map((trans, i) => (
               <Box
-                p="5px 10px"
-                borderRadius="4px"
+                key={`${trans.id}-${i}`}
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                borderBottom={`4px solid`}
+                p="15px"
               >
-                {trans.amount}
+                <Box>
+                  <Typography>{trans.id}</Typography>
+                </Box>
+                <Box>
+                  <Typography>{trans.transaction}</Typography>
+                </Box>
+                <Box p="5px 10px" text borderRadius="4px">
+                  {trans.amount}
+                </Box>
+                <Box>{trans.dateTime}</Box>
               </Box>
-            </Box>
-          ))}
+            ))}
         </Box>
 
         {/* ROW 2 */}

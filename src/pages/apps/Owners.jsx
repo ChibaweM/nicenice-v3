@@ -4,7 +4,7 @@ import Header from "../../components/Header";
 import { useState } from "react";
 import axios from "../../assets/axios";
 import { Button, Typography, InputBase } from "@mui/material";
-import { Edit, Delete } from "@mui/icons-material";
+import { Add, RemoveRedEye } from "@mui/icons-material";
 
 const Owners = () => {
   const GET_DRIVERS_URL = "/api/v1/admin/owners";
@@ -13,15 +13,7 @@ const Owners = () => {
     setDrivers(data);
   });
 
-  const [loadId, setloadID] = useState({
-    age: "",
-    fullName: "",
-    id: "",
-    imageURL: "",
-    location: "",
-    numReferences: "",
-    views: "",
-  });
+  const [loadId, setloadID] = useState({});
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
@@ -30,7 +22,8 @@ const Owners = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 1000,
+    height: 600,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -41,45 +34,47 @@ const Owners = () => {
     e.preventDefault();
   };
 
-  function captureEdit(clickedDriver) {
-    let filtered = drivers.filter((driver) => driver.id === clickedDriver.id);
+  const captureEdit = (clickedDriver) => {
     setOpen(true);
-    setloadID(filtered[0].row);
-  }
+    let filtered = drivers.filter((driver) => driver.id === clickedDriver.id);
+    setloadID(filtered[0]);
+  };
 
-  const [loadedCredits, setLoadedcredits] = useState({});
+  const [loadedCredits, setLoadedcredits] = useState(0);
 
   const handleChange = (e) => {
     setLoadedcredits(...e.target.value);
   };
 
   function handleCredit() {
-    console.log(loadedCredits);
-    console.log(loadId);
-    axios.put(`/api/v1/admin/${loadId.id}/load-credit`, {
+    handleClose();
+    axios
+      .put("/api/v1/admin/" + (loadId.id+1) + "/load-credit", {
         query: loadedCredits,
+        userId: loadId.id+1,
       }) //retriving the response
       .then((res) => {
-        return res.json();
+        return console.log(res.data)
       })
       .catch((err) => {
-        /*  if (!err?.response) {
-         setErrMsg('No Server Response');
-     } else if (err.response?.status === 400) {
-         setErrMsg('Missing Username or Password');
-     } else if (err.response?.status === 401) {
-         setErrMsg('Unauthorized');
-     } else {
-         setErrMsg('Login Failed');
-     } */
+        if (!err?.response) {
+          console.log("No Server Response");
+        } else if (err.response?.status === 400) {
+          console.log("Missing Username or Password");
+        } else if (err.response?.status === 401) {
+          console.log("Unauthorized");
+        } else {
+          console.log("Login Failed");
+        }
         console.log(err);
       });
   }
 
   const columns = [
+    { field: "id", headerName: "ID" },
     {
-      field: "fullName",
-      headerName: "Name",
+      field: "phoneNumber",
+      headerName: "Phone Number",
       flex: 1,
     },
     {
@@ -88,19 +83,20 @@ const Owners = () => {
       flex: 1,
     },
     {
-      field: "age",
-      headerName: "Phone Number",
+      field: "approved",
+      headerName: "Approved",
       flex: 1,
     },
     {
-      field: "numReferences",
-      headerName: "References",
+      field: "creditBalance",
+      headerName: "Balance",
       flex: 1,
     },
     {
-      field: "Credit",
-      headerName: "Credit",
-      renderCell: ({ row: { Status } }) => {
+      field: "action",
+      headerName: "Action",
+      flex: 1,
+      renderCell: () => {
         return (
           <>
             <Box
@@ -108,8 +104,12 @@ const Owners = () => {
               display="flex"
               justifyContent="center"
               borderRadius="4px"
+              fontSize="sm"
             >
-              <Button>Load</Button>
+              <Button onClick={(e) => handleEdit(e)}>
+                <RemoveRedEye />
+                View Details
+              </Button>
               <Modal
                 open={open}
                 onClose={handleClose}
@@ -117,13 +117,23 @@ const Owners = () => {
                 aria-describedby="modal-modal-description"
               >
                 <Box sx={style}>
+                  <Box display="flex">
+                    <Box
+                      display="flex"
+                      borderRadius="3px"
+                      backgroundColor={"#C117BC"}
+                      marginTop="20px"
+                    >
+                      <Typography>Owner Documents</Typography>
+                    </Box>
+                  </Box>
                   <Typography
                     id="modal-modal-title"
                     variant="h5"
                     component="h2"
                     marginBottom="20px"
                   >
-                    Credits Loader
+                    Driver Details
                   </Typography>
 
                   <Typography>
@@ -149,7 +159,7 @@ const Owners = () => {
                       marginTop="20px"
                       justifyContent="right"
                     >
-                      <Button onClick={(id) => handleCredit(id)}>
+                      <Button onClick={() => handleCredit()}>
                         <Typography color="#16161A">Add</Typography>
                       </Button>
                     </Box>
@@ -161,37 +171,29 @@ const Owners = () => {
         );
       },
     },
-    {
-      field: "action",
-      headerName: "Action",
-      flex: 1,
-      renderCell: ({ row: { Status } }) => {
-        return (
-          <>
-            <Box
-              m="15px"
-              display="flex"
-              justifyContent="center"
-              borderRadius="4px"
-            >
-              <Button onClick={(e) => handleEdit(e)}>
-                <Edit />
-              </Button>
-            </Box>
-            <Box display="flex" justifyContent="center" borderRadius="4px">
-              <Button>
-                <Delete />
-              </Button>
-            </Box>
-          </>
-        );
-      },
-    },
   ];
 
   return (
     <Box m="20px">
-      <Header title="Owners" subtitle="Manage the owners" />
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Header title="Owner" subtitle="Manage Owners" />
+
+        <Box>
+          <Button
+            sx={{
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              background: "#E2E2E2",
+              color: "#C117BC",
+            }}
+          >
+            <Add />
+            {/*  <DownloadOutlinedIcon sx={{ mr: "10px" }} /> */}
+            Add Owner
+          </Button>
+        </Box>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -219,12 +221,13 @@ const Owners = () => {
           },
         }}
       >
-        <DataGrid
-          onRowClick={(e) => captureEdit(e)}
-          checkboxSelection
-          rows={drivers}
-          columns={columns}
-        />
+        {drivers && (
+          <DataGrid
+            onRowClick={(e) => captureEdit(e)}
+            rows={drivers}
+            columns={columns}
+          />
+        )}
       </Box>
     </Box>
   );
