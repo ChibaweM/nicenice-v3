@@ -4,9 +4,10 @@ import Header from "../../components/Header";
 import { useState } from "react";
 import axios from "../../assets/axios";
 import { Button, Typography } from "@mui/material";
-import { Add, RemoveRedEye } from "@mui/icons-material";
+import { Add, Delete, Edit, RemoveRedEye } from "@mui/icons-material";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import viewPDF from "../../assets/veiwPDF.pdf";
+import { InputBase } from "@mui/material";
 
 const Drivers = () => {
   const style = {
@@ -15,7 +16,7 @@ const Drivers = () => {
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: 800,
-    height: 200,
+    height: 500,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -26,9 +27,9 @@ const Drivers = () => {
     backgroundColor: "#fff",
 
     /* Fixed position */
-    left: 0,
     position: "fixed",
-    top: 0,
+    top: "50%",
+    left: "50%",
 
     /* Take full size */
     height: "100%",
@@ -106,6 +107,26 @@ const Drivers = () => {
   };
 
   const [shown, setShown] = useState(false);
+
+  const handleDelete =()=>{
+    handleClose();
+    axios
+      .post(`/api/v1/admin/${loadId.id}/delete-driver`) //retriving the response
+      .then((res) => {
+        return setDrivers(...res.data());
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          console.log("No Server Response");
+        } else if (err.response?.status === 400) {
+          console.log("Missing Username or Password");
+        } else if (err.response?.status === 401) {
+          console.log("Unauthorized");
+        } else {
+          console.log("Login Failed");
+        }
+      });
+  }
 
   const columns = [
     {
@@ -188,71 +209,133 @@ const Drivers = () => {
                 aria-describedby="modal-modal-description"
               >
                 <Box sx={style}>
-                  <Box display="flex">
-                    <Box
-                      display="flex"
-                      borderRadius="3px"
-                      color={"#C117BC"}
-                      marginTop="20px"
-                      marginBottom="20px"
-                    >
-                      <Typography>Driver's Details</Typography>
-                    </Box>
+                  <Box
+                    borderRadius="3px"
+                    color={"#C117BC"}
+                    marginTop="20px"
+                    marginBottom="20px"
+                  >
+                    <Typography>Owner's Details</Typography>
                   </Box>
-                  <Box className="grid grid-cols-1 sm:grid-cols-2 pt-0 w-full">
-                    <Box justifyContent="left" marginBottom="5px">
-                      <Typography>
-                        Phone number: {loadId.phoneNumber}
-                      </Typography>
-                      <Typography>
-                        User's Credit: {loadId.creditBalance}
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Button onClick={() => setOpen(true)}>
-                        View Documents
-                      </Button>
-                      <Modal
-                        open={shown}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                      >
-                        <Box sx={style1}>
-                          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
-                            <Viewer fileUrl={viewPDF} />
-                          </Worker>
-                        </Box>
-                      </Modal>
-                    </Box>
-                    <Box>
+                  <Box className="grid grid-cols-2 sm:grid-cols-2 pt-0 w-full">
+                    <Box className="flex flex-col justify-center">
+                      <Box justifyContent="left" marginBottom="5px">
+                        <Typography>
+                          Phone number: {loadId.phoneNumber}
+                        </Typography>
+                        <Typography>
+                          User's Credit: {loadId.creditBalance}
+                        </Typography>
+                      </Box>
+                      <Box margin="20px"></Box>
                       <Box display="flex" justifyContent="space-between">
-                        <Box justifyContent="left">
-                          <Typography>Approve this driver?</Typography>
-                        </Box>
-                        <Box
-                          display="flex"
-                          borderRadius="3px"
-                          backgroundColor={"#green"}
-                          marginTop="10px"
-                          justifyContent="right"
-                        >
-                          <Button onClick={() => handleApprove()}>
-                            <Typography color="#16161A">Yes</Typography>
+                        <Typography>
+                          <Box marginBottom="30px">
+                            <Box>
+                              <Box>
+                                <Typography>Add Credits</Typography>
+                              </Box>
+                              <Box
+                                display="flex"
+                                borderRadius="3px"
+                                backgroundColor={"#E2E2E2"}
+                                marginTop="10px"
+                              >
+                                <InputBase
+                                  sx={{ ml: 2, flex: 1 }}
+                                  size="medium"
+                                  placeholder="Add Credit amount"
+                                  onChange={(e) => handleChange(e)}
+                                />
+                              </Box>
+                            </Box>
+                            <Box display="flex">
+                              <Box
+                                display="flex"
+                                borderRadius="3px"
+                                backgroundColor={"#C117BC"}
+                                marginTop="20px"
+                                justifyContent="right"
+                              >
+                                <Button onClick={() => handleCredit()}>
+                                  <Typography color="#16161A">Add</Typography>
+                                </Button>
+                              </Box>
+                            </Box>
+                          </Box>
+                          <Box>
+                            <Box>
+                              <Typography>Apporve Driver</Typography>
+                            </Box>
+                            <Box display="flex">
+                              <Box
+                                display="flex"
+                                borderRadius="3px"
+                                backgroundColor={"#C117BC"}
+                                margin="10px"
+                                marginLeft="0px"
+                              >
+                                <Button onClick={() => handleApprove()}>
+                                  <Typography color="#16161A">Yes</Typography>
+                                </Button>
+                              </Box>
+                              <Box
+                                display="flex"
+                                borderRadius="3px"
+                                backgroundColor={"#16161A"}
+                                margin="10px"
+                                justifyContent="right"
+                              >
+                                <Button onClick={() => handleClose()}>
+                                  <Typography color="#fff">No</Typography>
+                                </Button>
+                              </Box>
+                            </Box>
+                          </Box>
+                        </Typography>
+                      </Box>
+                    </Box>
+                    <Box>
+                      <Box className="flex flex-col justify-center">
+                        <Box justifyContent="left" marginBottom="5px">
+                          <Box>
+                            <Typography>Driver's Documents</Typography>
+                          </Box>
+                          <Typography>
+                            Documents Uploaded: 5
+                          </Typography>
+                          <Button onClick={() => setShown(true)}>
+                            View Documents
                           </Button>
                         </Box>
-                        <Box
-                          display="flex"
-                          borderRadius="3px"
-                          backgroundColor={"#C117BC"}
-                          marginTop="10px"
-                          justifyContent="right"
-                        >
-                          <Button onClick={() => handleClose()}>
-                            <Typography color="#16161A">No</Typography>
-                          </Button>
+                        <Box>
+                         
+                          <Modal
+                            open={shown}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                          >
+                            <Box sx={style1}>
+                              <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
+                                <Viewer fileUrl={viewPDF} />
+                              </Worker>
+                            </Box>
+                          </Modal>
                         </Box>
                       </Box>
+                    </Box>
+                  </Box>
+                  <Box display="flex" justifyContent="right">
+                    <Box>
+                      <Button>
+                        <Edit />
+                      </Button>
+                    </Box>
+                    <Box>
+                      <Button backgroundColor="#16161A" onClick={()=>handleDelete()}>
+                        <Delete />
+                      </Button>
                     </Box>
                   </Box>
                 </Box>

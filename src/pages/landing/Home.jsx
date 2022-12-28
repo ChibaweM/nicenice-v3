@@ -21,6 +21,7 @@ const Home = () => {
     },
   ];
 
+  const url2 = "https://apkfab.com/nicenice/com.blueconnectionz.nicenice/apk?h=d7174f291b6ef8f914c7a42e60640d10708d5a116f49beb2b1731dc3ef46d3e0"
   const handleLink = () => {
     console.log("lets gooo");
   };
@@ -46,7 +47,9 @@ const Home = () => {
             class="bg-fuchsia-700 hover:bg-red text-white mt-5 py-4 px-6 rounded"
             onClick={() => handleLink()}
           >
+            <a href={url2} target="_blank" >
             Android Download
+            </a>
           </button>
         </div>
 
