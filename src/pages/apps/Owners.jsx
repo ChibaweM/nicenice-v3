@@ -46,6 +46,10 @@ const Owners = () => {
     setLoadedcredits(...e.target.value);
   };
 
+  const hadnleDelete = (e) => {
+    setLoadedcredits(...e.target.value);
+  };
+
   function handleCredit() {
     handleClose();
     axios
@@ -94,7 +98,7 @@ const Owners = () => {
                 <Typography className="text-green-400">Approved</Typography>
               )}
               {approved === false && (
-                <Typography className="text-red-600">Not Apporved</Typography>
+                <Typography className="text-red-600">Not Approved</Typography>
               )}
             </Box>
           </>
@@ -164,69 +168,44 @@ const Owners = () => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Box display="flex">
-                        <Typography>Approve this driver?</Typography>
-                        <Box
-                          display="flex"
-                          borderRadius="3px"
-                          backgroundColor={"#green"}
-                          marginTop="10px"
-                          justifyContent="right"
-                        >
-                          <Button onClick={() => handleApprove()}>
-                            <Typography color="#16161A">Yes</Typography>
-                          </Button>
+                      <Typography>
+                        <Box>
+                          <Box>
+                            <Box>
+                              <Typography>Add Credit to user</Typography>
+                            </Box>
+                            <Box
+                              display="flex"
+                              borderRadius="3px"
+                              backgroundColor={"#E2E2E2"}
+                              marginTop="10px"
+                            >
+                              <InputBase
+                                sx={{ ml: 2, flex: 1 }}
+                                placeholder="Add Credit amount"
+                                onChange={(e) => handleChange(e)}
+                              />
+                            </Box>
+                          </Box>
+                          <Box display="flex">
+                            <Box
+                              display="flex"
+                              borderRadius="3px"
+                              backgroundColor={"#C117BC"}
+                              marginTop="20px"
+                              justifyContent="right"
+                            >
+                              <Button onClick={() => handleCredit()}>
+                                <Typography color="#16161A">Add</Typography>
+                              </Button>
+                            </Box>
+                          </Box>
                         </Box>
-                        <Box
-                          display="flex"
-                          borderRadius="3px"
-                          backgroundColor={"#C117BC"}
-                          marginTop="10px"
-                          justifyContent="right"
-                        >
-                          <Button onClick={() => handleClose()}>
-                            <Typography color="#16161A">No</Typography>
-                          </Button>
-                        </Box>
-                      </Box>
+                      </Typography>
                     </Box>
                   </Box>
                   <Box margin="30px"></Box>
                   <Box display="flex" justifyContent="space-between">
-                    <Typography>
-                      <Box>
-                        <Box>
-                          <Box>
-                            <Typography>Add Credit to user</Typography>
-                          </Box>
-                          <Box
-                            display="flex"
-                            borderRadius="3px"
-                            backgroundColor={"#E2E2E2"}
-                            marginTop="10px"
-                          >
-                            <InputBase
-                              sx={{ ml: 2, flex: 1 }}
-                              placeholder="Add Credit amount"
-                              onChange={(e) => handleChange(e)}
-                            />
-                          </Box>
-                        </Box>
-                        <Box display="flex">
-                          <Box
-                            display="flex"
-                            borderRadius="3px"
-                            backgroundColor={"#C117BC"}
-                            marginTop="20px"
-                            justifyContent="right"
-                          >
-                            <Button onClick={() => handleCredit()}>
-                              <Typography color="#16161A">Add</Typography>
-                            </Button>
-                          </Box>
-                        </Box>
-                      </Box>
-                    </Typography>
                     <Typography>
                       <Box>
                         <Box>
@@ -242,7 +221,7 @@ const Owners = () => {
                             margin="10px"
                             justifyContent="right"
                           >
-                            <Button onClick={() => handleCredit()}>
+                            <Button onClick={() => hadnleDelete()}>
                               <Typography color="#16161A">Yes</Typography>
                             </Button>
                           </Box>
@@ -253,7 +232,7 @@ const Owners = () => {
                             margin="10px"
                             justifyContent="right"
                           >
-                            <Button onClick={() => handleCredit()}>
+                            <Button onClick={() => handleClose()}>
                               <Typography color="#fff">No</Typography>
                             </Button>
                           </Box>

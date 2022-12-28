@@ -3,8 +3,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { useState } from "react";
 import axios from "../../assets/axios";
-import { Button, Typography, InputBase } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Add, RemoveRedEye } from "@mui/icons-material";
+import { Viewer, Worker } from "@react-pdf-viewer/core";
+import viewPDF from "../../assets/veiwPDF.pdf";
 
 const Drivers = () => {
   const style = {
@@ -18,6 +20,26 @@ const Drivers = () => {
     border: "2px solid #000",
     boxShadow: 24,
     p: 4,
+  };
+
+  const style1 = {
+    backgroundColor: "#fff",
+
+    /* Fixed position */
+    left: 0,
+    position: "fixed",
+    top: 0,
+
+    /* Take full size */
+    height: "100%",
+    width: "100%",
+
+    /* Displayed on top of other elements */
+    zIndex: 9999,
+
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
   };
 
   const GET_DRIVERS_URL = "/api/v1/dashboard/driver-table";
@@ -83,8 +105,22 @@ const Drivers = () => {
       });
   };
 
+  const [shown, setShown] = useState(false);
+
   const columns = [
-    { field: "id", headerName: "ID" },
+    {
+      field: "image",
+      headerName: "Image",
+      renderCell: ({ row: { image } }) => {
+        return (
+          <>
+            <Box>
+              <Typography className="text-green-400">{image}</Typography>
+            </Box>
+          </>
+        );
+      },
+    },
     {
       field: "fullName",
       headerName: "Name",
@@ -160,7 +196,7 @@ const Drivers = () => {
                       marginTop="20px"
                       marginBottom="20px"
                     >
-                      <Typography>Owner's Details</Typography>
+                      <Typography>Driver's Details</Typography>
                     </Box>
                   </Box>
                   <Box className="grid grid-cols-1 sm:grid-cols-2 pt-0 w-full">
@@ -173,7 +209,24 @@ const Drivers = () => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Box display="flex" justifyContent="space-between" >
+                      <Button onClick={() => setOpen(true)}>
+                        View Documents
+                      </Button>
+                      <Modal
+                        open={shown}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box sx={style1}>
+                          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.1.81/build/pdf.worker.min.js">
+                            <Viewer fileUrl={viewPDF} />
+                          </Worker>
+                        </Box>
+                      </Modal>
+                    </Box>
+                    <Box>
+                      <Box display="flex" justifyContent="space-between">
                         <Box justifyContent="left">
                           <Typography>Approve this driver?</Typography>
                         </Box>

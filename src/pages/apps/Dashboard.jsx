@@ -31,10 +31,13 @@ const Dashboard = () => {
   const GET_DRIVERS_URL1 = "/api/v1/dashboard/all-transactions";
   const [drivers1, setDrivers1] = useState([]);
 
+  const [lateFive, setFive] = useState([])
+
   useEffect(() => {
     axios.get(GET_DRIVERS_URL1).then(({ data }) => {
       setDrivers1(data);
     });
+    setFive(drivers1.slice((drivers1.length-5)))
   });
 
   return (
@@ -202,8 +205,8 @@ const Dashboard = () => {
               Recent Transactions
             </Typography>
           </Box>
-          {drivers &&
-            drivers1.map((trans, i) => (
+          {lateFive &&
+            lateFive.map((trans, i) => (
               <Box
                 key={`${trans.id}-${i}`}
                 display="flex"

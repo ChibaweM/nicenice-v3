@@ -9,6 +9,7 @@ import imageLogo from "../assets/NiceNiceLogo.png";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 
 import { Routing } from "../Routing";
+import { DirectionsCar, Pages, Person, Person2, Receipt, Settings } from "@mui/icons-material";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   return (
@@ -34,12 +35,12 @@ const Sidebars = () => {
 
   const [open, setOpen] = useState(true);
   const Menus = [
-    { title: "Dashboard", link: "/dashboard"},
-    { title: "Drivers", link: "/drivers", gap: true },
-    { title: "Owners", link: "/owners" },
-    { title: "Cars", link: "/cars" },
-    { title: "Invoices", link: "/invoices", gap: true },
-    { title: "Settings", link: "/settings" },
+    { title: "Dashboard", link: "/dashboard", icon: <HomeOutlinedIcon/>},
+    { title: "Drivers", link: "/drivers", icon: <Person2/>, gap: true },
+    { title: "Owners", link: "/owners", icon: <Person/> },
+    { title: "Cars", link: "/cars",icon: <DirectionsCar/> },
+    { title: "Invoices", link: "/invoices", icon: <Receipt/>, gap: true },
+    { title: "Settings", link: "/settings", icon: <Settings/> },
   ];
 
   const handleLink = (id) => {
@@ -49,7 +50,7 @@ const Sidebars = () => {
   return (
     <div
       className={` ${
-        open ? "w-72" : "w-20 "
+        open ? "w-64" : "w-20 "
       } bg-gray-100 h-screen p-5  pt-8 relative duration-300`}
     >
       <img
@@ -70,7 +71,7 @@ const Sidebars = () => {
           ${Menu.gap ? "mt-9" : "mt-2"} ${index === 0 && "bg-light-white"} `}
             onClick={() => handleLink(Menu.link)}
           >
-            <HomeOutlinedIcon/>
+            {Menu.icon}
             <span className={`${!open && "hidden"} origin-left duration-200`}>
               {Menu.title}
             </span>

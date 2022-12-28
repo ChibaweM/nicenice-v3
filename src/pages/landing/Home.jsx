@@ -21,6 +21,9 @@ const Home = () => {
     },
   ];
 
+  const handleLink = () => {
+    console.log("lets gooo");
+  };
   return (
     <section>
       <div className="bg-blackpink-gradient w-full flex py-12 justify-between items-center">
@@ -39,7 +42,10 @@ const Home = () => {
             are looking for a car, it will help you find the best cars availabe
             in your area.
           </p>
-          <button class="bg-fuchsia-700 hover:bg-red text-white mt-5 py-4 px-6 rounded">
+          <button
+            class="bg-fuchsia-700 hover:bg-red text-white mt-5 py-4 px-6 rounded"
+            onClick={() => handleLink()}
+          >
             Android Download
           </button>
         </div>
@@ -50,7 +56,7 @@ const Home = () => {
           <img src={phone1} alt="billing" width="300px" />
         </div>
 
-       {/*  <div
+        {/*  <div
           className={`${styles.flexCenter} flex-row flex-wrap sm:mb-20 mb-6`}
         >
           {stats.map((stat) => (
