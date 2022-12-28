@@ -50,17 +50,17 @@ const Cars = () => {
     },
     {
       field: "year",
-      headerName: "Credits",
+      headerName: "Year",
       flex: 1,
     },
     {
       field: "city",
-      headerName: "platform",
+      headerName: "Location",
       flex: 1,
     },
     {
       field: "weeklyTarget",
-      headerName: "Owner",
+      headerName: "Weekly Target",
       flex: 1,
     },
     {
@@ -75,6 +75,24 @@ const Cars = () => {
               )}
               {depositRequired === false && (
                 <Typography className="text-red-600">No</Typography>
+              )}
+            </Box>
+          </>
+        );
+      },
+    },
+    {
+      field: "activeOnHailingPlatforms",
+      headerName: "Active",
+      renderCell: ({ row: { activeOnHailingPlatforms } }) => {
+        return (
+          <>
+            <Box>
+              {activeOnHailingPlatforms === true && (
+                <Typography className="text-green-400">Active</Typography>
+              )}
+              {activeOnHailingPlatforms === false && (
+                <Typography className="text-red-600">Inactive</Typography>
               )}
             </Box>
           </>

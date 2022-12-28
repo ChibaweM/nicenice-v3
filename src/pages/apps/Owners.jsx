@@ -22,8 +22,8 @@ const Owners = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 800,
-    height: 500,
+    width: 750,
+    height: 350,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -133,7 +133,7 @@ const Owners = () => {
               borderRadius="4px"
               className="hover:bg-pinkVariant"
             >
-              <Button  onClick={(e) => handleEdit(e)}>
+              <Button onClick={(e) => handleEdit(e)}>
                 <RemoveRedEye className="text-black" />
               </Button>
               <Modal
@@ -164,50 +164,36 @@ const Owners = () => {
                       </Typography>
                     </Box>
                     <Box>
-                      <Box>
-                        <Box>
-                          <Typography>Add Credit to user</Typography>
-                        </Box>
+                      <Box display="flex">
+                        <Typography>Approve this driver?</Typography>
                         <Box
                           display="flex"
                           borderRadius="3px"
-                          backgroundColor={"#E2E2E2"}
+                          backgroundColor={"#green"}
                           marginTop="10px"
+                          justifyContent="right"
                         >
-                          <InputBase
-                            sx={{ ml: 2, flex: 1 }}
-                            placeholder="Add Credit amount"
-                            onChange={(e) => handleChange(e)}
-                          />
+                          <Button onClick={() => handleApprove()}>
+                            <Typography color="#16161A">Yes</Typography>
+                          </Button>
                         </Box>
-                      </Box>
-                      <Box display="flex" justifyContent="right">
                         <Box
                           display="flex"
                           borderRadius="3px"
                           backgroundColor={"#C117BC"}
-                          marginTop="20px"
+                          marginTop="10px"
                           justifyContent="right"
                         >
-                          <Button onClick={() => handleCredit()}>
-                            <Typography color="#16161A">Add</Typography>
+                          <Button onClick={() => handleClose()}>
+                            <Typography color="#16161A">No</Typography>
                           </Button>
                         </Box>
                       </Box>
                     </Box>
                   </Box>
-                  <Box margin="20px">
-                  </Box>
-                  <Box display="flex">
+                  <Box margin="30px"></Box>
+                  <Box display="flex" justifyContent="space-between">
                     <Typography>
-                      <Box justifyContent="left" marginBottom="5px">
-                        <Typography>
-                          Phone number: {loadId.phoneNumber}
-                        </Typography>
-                        <Typography>
-                          User's Credit: {loadId.creditBalance}
-                        </Typography>
-                      </Box>
                       <Box>
                         <Box>
                           <Box>
@@ -226,16 +212,49 @@ const Owners = () => {
                             />
                           </Box>
                         </Box>
-                        <Box display="flex" justifyContent="right">
+                        <Box display="flex">
                           <Box
                             display="flex"
                             borderRadius="3px"
                             backgroundColor={"#C117BC"}
-                            margin="20px"
+                            marginTop="20px"
                             justifyContent="right"
                           >
                             <Button onClick={() => handleCredit()}>
                               <Typography color="#16161A">Add</Typography>
+                            </Button>
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Typography>
+                    <Typography>
+                      <Box>
+                        <Box>
+                          <Box>
+                            <Typography>Delete User</Typography>
+                          </Box>
+                        </Box>
+                        <Box display="flex" justifyContent="space-between">
+                          <Box
+                            display="flex"
+                            borderRadius="3px"
+                            backgroundColor={"#C117BC"}
+                            margin="10px"
+                            justifyContent="right"
+                          >
+                            <Button onClick={() => handleCredit()}>
+                              <Typography color="#16161A">Yes</Typography>
+                            </Button>
+                          </Box>
+                          <Box
+                            display="flex"
+                            borderRadius="3px"
+                            backgroundColor={"#16161A"}
+                            margin="10px"
+                            justifyContent="right"
+                          >
+                            <Button onClick={() => handleCredit()}>
+                              <Typography color="#fff">No</Typography>
                             </Button>
                           </Box>
                         </Box>
