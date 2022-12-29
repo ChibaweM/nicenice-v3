@@ -136,7 +136,7 @@ const Drivers = () => {
         return (
           <>
             <Box>
-              <Typography className="text-green-400">{image}</Typography>
+              <img src="" alt="image"/>
             </Box>
           </>
         );
@@ -215,11 +215,12 @@ const Drivers = () => {
                     marginTop="20px"
                     marginBottom="20px"
                   >
-                    <Typography>Owner's Details</Typography>
+                    <Typography>Driver's Details</Typography>
                   </Box>
                   <Box className="grid grid-cols-2 sm:grid-cols-2 pt-0 w-full">
                     <Box className="flex flex-col justify-center">
                       <Box justifyContent="left" marginBottom="5px">
+                        <img src="" alt="person's image"/>
                         <Typography>
                           Phone number: {loadId.phoneNumber}
                         </Typography>
@@ -333,7 +334,7 @@ const Drivers = () => {
                       </Button>
                     </Box>
                     <Box>
-                      <Button backgroundColor="#16161A" onClick={()=>handleDelete()}>
+                      <Button onClick={()=>handleDelete()}>
                         <Delete />
                       </Button>
                     </Box>

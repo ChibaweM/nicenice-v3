@@ -1,7 +1,7 @@
 import { Box, Button, Modal, Typography, InputBase } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../components/Header";
-import { Add, RemoveRedEye } from "@mui/icons-material";
+import { Add, Block, RemoveRedEye } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import axios from "../../assets/axios";
 
@@ -18,7 +18,6 @@ const Cars = () => {
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
-  
   const style = {
     position: "absolute",
     top: "50%",
@@ -31,7 +30,6 @@ const Cars = () => {
     boxShadow: 24,
     p: 4,
   };
-
 
   const handleEdit = (e) => {
     e.preventdefault();
@@ -116,7 +114,7 @@ const Cars = () => {
                 <RemoveRedEye className="text-black" />
               </Button>
 
-             <Modal
+              <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
@@ -232,21 +230,42 @@ const Cars = () => {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Cars" subtitle="Manage Cars" />
         <Box>
-          <Button
-            sx={{
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-              background: "#E2E2E2",
-              color: "#C117BC",
-            }}
-          >
-            <Add/>
-            {/*  <DownloadOutlinedIcon sx={{ mr: "10px" }} /> */}
-            Add Car
-          </Button>
+          <Header title="Cars" subtitle="Manage Cars" />
+        </Box>
+        <Box display="flex" justifyContent="space-between">
+          <Box>
+            <Button
+              sx={{
+                fontSize: "14px",
+                margin: "5px",
+                fontWeight: "bold",
+                padding: "10px 20px",
+                background: "#E2E2E2",
+                color: "#C117BC",
+              }}
+              onClick={()=>handleAddModal()}
+            >
+              <Add />
+              Add Car
+            </Button>
+          </Box>
+          <Box>
+            <Button
+              sx={{
+                margin: "5px",
+                fontSize: "14px",
+                fontWeight: "bold",
+                padding: "10px 20px",
+                background: "#E2E2E2",
+                color: "#C117BC",
+              }}
+              onClick={()=>handleBlockModal()}
+            >
+              <Block/>
+              Block Car
+            </Button>
+          </Box>
         </Box>
       </Box>
       <Box

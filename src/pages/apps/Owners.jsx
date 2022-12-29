@@ -24,8 +24,8 @@ const Owners = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 750,
-    height: 500,
+    width: 650,
+    height: 400,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -68,9 +68,25 @@ const Owners = () => {
     setLoadedcredits(...e.target.value);
   };
 
-  const hadnleDelete = (e) => {
-    setLoadedcredits(...e.target.value);
-  };
+  const handleDelete =()=>{
+    handleClose();
+    axios
+      .post(`/api/v1/admin/${loadId.id}/delete-owner`) //retriving the response
+      .then((res) => {
+        return setDrivers(...res.data());
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          console.log("No Server Response");
+        } else if (err.response?.status === 400) {
+          console.log("Missing Username or Password");
+        } else if (err.response?.status === 401) {
+          console.log("Unauthorized");
+        } else {
+          console.log("Login Failed");
+        }
+      });
+  }
 
   function handleCredit() {
     handleClose();
@@ -245,35 +261,6 @@ const Owners = () => {
                               </Box>
                             </Box>
                           </Box>
-                          <Box>
-                            <Box>
-                              <Typography>Apporve Driver</Typography>
-                            </Box>
-                            <Box display="flex">
-                              <Box
-                                display="flex"
-                                borderRadius="3px"
-                                backgroundColor={"#C117BC"}
-                                margin="10px"
-                                marginLeft="0px"
-                              >
-                                <Button onClick={() => handleApprove()}>
-                                  <Typography color="#16161A">Yes</Typography>
-                                </Button>
-                              </Box>
-                              <Box
-                                display="flex"
-                                borderRadius="3px"
-                                backgroundColor={"#16161A"}
-                                margin="10px"
-                                justifyContent="right"
-                              >
-                                <Button onClick={() => handleClose()}>
-                                  <Typography color="#fff">No</Typography>
-                                </Button>
-                              </Box>
-                            </Box>
-                          </Box>
                         </Typography>
                       </Box>
                     </Box>
@@ -281,16 +268,10 @@ const Owners = () => {
                       <Box className="flex flex-col justify-center">
                         <Box justifyContent="left" marginBottom="5px">
                           <Box>
-                            <Typography>Driver's Documents</Typography>
+                            <Typography>Owner's Documents</Typography>
                           </Box>
-                          <Typography>
-                            Phone number: {loadId.phoneNumber}
-                          </Typography>
-                          <Typography>
-                            User's Credit: {loadId.creditBalance}
-                          </Typography>
                         </Box>
-                        <Box>
+                        <Box justifyContent="left">
                           <Button onClick={() => setShown(true)}>
                             View Documents
                           </Button>
@@ -317,7 +298,7 @@ const Owners = () => {
                       </Button>
                     </Box>
                     <Box>
-                      <Button backgroundColor="#16161A">
+                      <Button onClick={()=>handleDelete()}>
                         <Delete />
                       </Button>
                     </Box>
