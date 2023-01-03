@@ -24,23 +24,16 @@ const Drivers = () => {
   };
 
   const style1 = {
-    backgroundColor: "#fff",
-
-    /* Fixed position */
-    position: "fixed",
+    position: "absolute",
     top: "50%",
     left: "50%",
-
-    /* Take full size */
-    height: "100%",
-    width: "100%",
-
-    /* Displayed on top of other elements */
-    zIndex: 9999,
-
-    display: "flex",
-    flexDirection: "column",
-    overflow: "hidden",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    height: 500,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
   };
 
   const GET_DRIVERS_URL = "/api/v1/dashboard/driver-table";
@@ -108,7 +101,7 @@ const Drivers = () => {
 
   const [shown, setShown] = useState(false);
 
-  const handleDelete =()=>{
+  const handleDelete = () => {
     handleClose();
     axios
       .post(`/api/v1/admin/${loadId.id}/delete-driver`) //retriving the response
@@ -126,17 +119,19 @@ const Drivers = () => {
           console.log("Login Failed");
         }
       });
-  }
+  };
 
   const columns = [
     {
+
+      /* Fix imaages here Now!!!!! */
       field: "image",
       headerName: "Image",
       renderCell: ({ row: { image } }) => {
         return (
           <>
             <Box>
-              <img src="" alt="image"/>
+              <img src="" alt="image" />
             </Box>
           </>
         );
@@ -220,7 +215,7 @@ const Drivers = () => {
                   <Box className="grid grid-cols-2 sm:grid-cols-2 pt-0 w-full">
                     <Box className="flex flex-col justify-center">
                       <Box justifyContent="left" marginBottom="5px">
-                        <img src="" alt="person's image"/>
+                        <img src="" alt="person's image" />
                         <Typography>
                           Phone number: {loadId.phoneNumber}
                         </Typography>
@@ -302,15 +297,30 @@ const Drivers = () => {
                           <Box>
                             <Typography>Driver's Documents</Typography>
                           </Box>
-                          <Typography>
-                            Documents Uploaded: 5
-                          </Typography>
-                          <Button onClick={() => setShown(true)}>
-                            View Documents
-                          </Button>
+                          <Typography>Documents Uploaded: 5</Typography>
+                          {drivers &&
+                            drivers.map((trans, i) => (
+                              <Box
+                                key={`${trans.id}-${i}`}
+                                display="flex"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                borderBottom={`4px`}
+                                p="15px"
+                              >
+                                <Box>
+                                  <Typography>{trans.id}</Typography>
+                                </Box>
+                                <Box>
+                                  <Typography>{trans.fullName}</Typography>
+                                </Box>
+                                <Button onClick={() => setShown(true)}>
+                                  View Documents
+                                </Button>
+                              </Box>
+                            ))}
                         </Box>
                         <Box>
-                         
                           <Modal
                             open={shown}
                             onClose={handleClose}
@@ -334,7 +344,7 @@ const Drivers = () => {
                       </Button>
                     </Box>
                     <Box>
-                      <Button onClick={()=>handleDelete()}>
+                      <Button onClick={() => handleDelete()}>
                         <Delete />
                       </Button>
                     </Box>
