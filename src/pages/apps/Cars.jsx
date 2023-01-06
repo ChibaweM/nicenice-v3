@@ -137,9 +137,6 @@ const Cars = () => {
                       <Typography>
                         Phone number: {loadId.phoneNumber}
                       </Typography>
-                      <Typography>
-                        User's Credit: {loadId.creditBalance}
-                      </Typography>
                     </Box>
                     <Box>
                       <Box>

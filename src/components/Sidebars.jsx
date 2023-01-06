@@ -9,7 +9,7 @@ import imageLogo from "../assets/NiceNiceLogo.png";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 
 import { Routing } from "../Routing";
-import { DirectionsCar, Pages, Person, Person2, Receipt, Settings } from "@mui/icons-material";
+import { DirectionsCar, Home, Pages, Person, Person2, Receipt, Settings } from "@mui/icons-material";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   return (
@@ -35,7 +35,7 @@ const Sidebars = () => {
 
   const [open, setOpen] = useState(true);
   const Menus = [
-    { title: "Dashboard", link: "/dashboard", icon: <HomeOutlinedIcon/>},
+    { title: "Dashboard", link: "/dashboard", icon: <Home/>},
     { title: "Drivers", link: "/drivers", icon: <Person2/>, gap: true },
     { title: "Owners", link: "/owners", icon: <Person/> },
     { title: "Cars", link: "/cars",icon: <DirectionsCar/> },
