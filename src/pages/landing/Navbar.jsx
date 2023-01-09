@@ -10,10 +10,6 @@ const Navbar = () => {
   const navLinks = [
     {
       id: "/",
-      title: "Home",
-    },
-    {
-      id: "login",
       title: "Login",
     },
   ];
