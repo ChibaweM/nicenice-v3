@@ -244,7 +244,7 @@ const Cars = () => {
                       marginBottom="5px"
                     >
                       <Typography fontSize="20px">
-                        <b>Car's Approval</b>
+                        <b>Car's Details</b>
                       </Typography>
                     </Box>
                     <Box className="grid grid-cols-2 sm:grid-cols-2 pt-0 w-full">

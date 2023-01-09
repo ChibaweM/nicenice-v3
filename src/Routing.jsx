@@ -1,6 +1,6 @@
 export const Routing = {
-    Home: { path: "/" },
-    Login: { path: "/login" },
+    /* Home: { path: "/" }, */
+    Login: { path: "/" },
     Dashboard: { path: "/dashboard" },
     Invoices: { path: "/invoices" },
     Settings: { path: "/settings" },
