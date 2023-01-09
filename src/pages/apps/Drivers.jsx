@@ -1,4 +1,4 @@
-import { Box, Modal } from "@mui/material";
+import { Box, IconButton, Modal } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../components/Header";
 import { useState } from "react";
@@ -12,6 +12,7 @@ import {
   FileDownload,
   RemoveRedEye,
   RemoveRedEyeOutlined,
+  Search,
 } from "@mui/icons-material";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import viewPDF from "../../assets/veiwPDF.pdf";
@@ -65,6 +66,19 @@ const Drivers = () => {
     transform: "translate(-50%, -50%)",
     width: 500,
     height: 200,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const style5 = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 700,
+    height: 450,
     bgcolor: "background.paper",
     border: "2px solid #000",
     boxShadow: 24,
@@ -126,6 +140,20 @@ const Drivers = () => {
     location: "",
   });
 
+  /*  const [newdriver, setNewdriver] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    location: "",
+    phoneNumber: "",
+  });
+
+  function handle(e) {
+    const newDriver = { ...newdriver };
+    newDriver[e.target.name] = e.target.value;
+    setNewdriver(newDriver);
+  } */
+
   function handleEditChange(e) {
     const newDriver = { ...editDriver };
     newDriver[e.target.name] = e.target.value;
@@ -145,17 +173,26 @@ const Drivers = () => {
         return setDrivers(...res.data());
       })
       .catch((err) => {
-        if (!err?.response) {
-          console.log("No Server Response");
-        } else if (err.response?.status === 400) {
-          console.log("Missing Username or Password");
-        } else if (err.response?.status === 401) {
-          console.log("Unauthorized");
-        } else {
-          console.log("Login Failed");
-        }
+        setErrMsg(err);
       });
   };
+
+  const [searchQuery, setsearchQuery] = useState("");
+  function handleSearchChnage(e) {
+    setsearchQuery(e.target.value);
+    axios
+      .get(
+        "https://escortme-backend.herokuapp.com/api/v1/admin/search/drivers?query=" +
+          searchQuery
+      )
+      .then((res) => {
+        //console.log(res.data);
+        setDrivers(res.data);
+      })
+      .catch((error) => {
+        setErrMsg(error);
+      });
+  }
 
   const handleApprove = () => {
     handleClose();
@@ -165,21 +202,13 @@ const Drivers = () => {
         return setDrivers(...res.data());
       })
       .catch((err) => {
-        if (!err?.response) {
-          console.log("No Server Response");
-        } else if (err.response?.status === 400) {
-          console.log("Missing Username or Password");
-        } else if (err.response?.status === 401) {
-          console.log("Unauthorized");
-        } else {
-          console.log("Login Failed");
-        }
+        setErrMsg(err);
       });
   };
 
   const [shown, setShown] = useState(false);
 
-  const handleSuspend = ()=>{
+  const handleSuspend = () => {
     handleCloseSuspend();
     axios
       .post(`/api/v1/admin/${loadId.id}/suspend-driver`) //retriving the response
@@ -187,17 +216,9 @@ const Drivers = () => {
         return setDrivers(...res.data());
       })
       .catch((err) => {
-        if (!err?.response) {
-          console.log("No Server Response");
-        } else if (err.response?.status === 400) {
-          console.log("Missing Username or Password");
-        } else if (err.response?.status === 401) {
-          console.log("Unauthorized");
-        } else {
-          console.log("Login Failed");
-        }
+        setErrMsg(err);
       });
-  }
+  };
 
   const handleDelete = () => {
     handleClose();
@@ -207,15 +228,7 @@ const Drivers = () => {
         return setDrivers(...res.data());
       })
       .catch((err) => {
-        if (!err?.response) {
-          console.log("No Server Response");
-        } else if (err.response?.status === 400) {
-          console.log("Missing Username or Password");
-        } else if (err.response?.status === 401) {
-          console.log("Unauthorized");
-        } else {
-          console.log("Login Failed");
-        }
+        setErrMsg(err);
       });
   };
 
@@ -449,10 +462,16 @@ const Drivers = () => {
                             </Box>
                             <Box className="content-center">
                               <Box>
-                                <button onClick={()=>handleSuspend()} className="border rounded-md m-5 p-2 bg-red-600 hover:bg-red-700 text-white">
+                                <button
+                                  onClick={() => handleSuspend()}
+                                  className="border rounded-md m-5 p-2 bg-red-600 hover:bg-red-700 text-white"
+                                >
                                   Yes
                                 </button>
-                                <button onClick={()=>handleCloseSuspend()} className="border rounded-md m-5 p-2 bg-black hover:bg-gray-700 text-white">
+                                <button
+                                  onClick={() => handleCloseSuspend()}
+                                  className="border rounded-md m-5 p-2 bg-black hover:bg-gray-700 text-white"
+                                >
                                   No
                                 </button>
                               </Box>
@@ -482,12 +501,22 @@ const Drivers = () => {
                                 {loadId.fullName}
                               </Typography>
                             </Box>
-                            <Box display="flex" justify-content="left" className="content-center">
+                            <Box
+                              display="flex"
+                              justify-content="left"
+                              className="content-center"
+                            >
                               <Box>
-                                <button onClick={()=>handleDelete()} className="border rounded-md m-5 p-2 bg-red-600 hover:bg-red-700 text-white">
+                                <button
+                                  onClick={() => handleDelete()}
+                                  className="border rounded-md m-5 p-2 bg-red-600 hover:bg-red-700 text-white"
+                                >
                                   Yes
                                 </button>
-                                <button onClick={()=>handleCloseDelete()} className="border rounded-md m-5 p-2 bg-black hover:bg-gray-700 text-white">
+                                <button
+                                  onClick={() => handleCloseDelete()}
+                                  className="border rounded-md m-5 p-2 bg-black hover:bg-gray-700 text-white"
+                                >
                                   No
                                 </button>
                               </Box>
@@ -498,7 +527,7 @@ const Drivers = () => {
                     </Box>
                   </Box>
                 ) : (
-                  <Box sx={style}>
+                  <Box sx={style5}>
                     <Box
                       borderRadius="3px"
                       color={"#C117BC"}
@@ -547,33 +576,34 @@ const Drivers = () => {
                           </Modal>
                         </Box>
                       </Box>
-                      <Box margin="30px">
+                      <Box display="flex" margin="30px" justifyContent="right">
                         <Box>
                           <Box>
                             <Typography>Approve Driver</Typography>
                           </Box>
                         </Box>
-                        <Box display="flex" justifyContent="left">
+                        <Box display="flex">
                           <Box
                             display="flex"
-                            borderRadius="3px"
+                            borderRadius="2px"
                             backgroundColor={"#C117BC"}
-                            marginTop="20px"
+                            height="30px"
+                            margin="10px"
                             justifyContent="right"
                           >
-                            <Button onClick={() => handleCredit()}>
+                            <Button onClick={() => handleApprove()}>
                               <Typography color="#16161A">Yes</Typography>
                             </Button>
                           </Box>
                           <Box
                             display="flex"
-                            borderRadius="3px"
+                            borderRadius="2px"
                             backgroundColor={"#16161A"}
-                            marginTop="20px"
-                            marginLeft="20px"
+                            margin="10px"
+                            height="30px"
                             justifyContent="right"
                           >
-                            <Button onClick={() => handleCredit()}>
+                            <Button onClick={() => handleClose()}>
                               <Typography color="#fff">No</Typography>
                             </Button>
                           </Box>
@@ -606,128 +636,129 @@ const Drivers = () => {
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Box>
-        <Header title="Drivers" subtitle="Manage The Drivers" />
+          <Header title="Drivers" subtitle="Manage The Drivers" />
         </Box>
         <Box display="flex" justifyContent="space-between">
-        <Box>
-          <Button
-            sx={{
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-              margin:"5px",
-              background: "#E2E2E2",
-              color: "#C117BC",
-            }}
-            onClick={() => setOpenAdd(true)}
-          >
-            <Add />
-            Add Driver
-          </Button>
-          <Modal
-            open={openAdd}
-            onClose={handleCloseAdd}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style2}>
-              <form
-                onSubmit={(e) => handleEditClick(e)}
-                className="max-w-[400px] w-full mx-auto bg-white p-4"
-              >
-                <Box>
-                  <Typography>Add New Driver</Typography>
-                </Box>
-                <div className="flex flex-col py-2">
-                  <label>Name</label>
-                  <input
-                    type="text"
-                    autoComplete="on"
-                    onChange={(e) => handleEditChange(e)}
-                    value={editDriver.fullName}
-                    required
-                    name="fullName"
-                    className="border rounded-md bg-gray-200 p-1"
-                  />
-                </div>
-                <div className="flex flex-col py-2">
-                  <label>Name</label>
-                  <input
-                    type="text"
-                    autoComplete="on"
-                    onChange={(e) => handleEditChange(e)}
-                    value={editDriver.fullName}
-                    required
-                    name="fullName"
-                    className="border rounded-md bg-gray-200 p-1"
-                  />
-                </div>
-                <div className="flex flex-col py-2">
-                  <label>Name</label>
-                  <input
-                    type="text"
-                    autoComplete="on"
-                    onChange={(e) => handleEditChange(e)}
-                    value={editDriver.fullName}
-                    required
-                    name="fullName"
-                    className="border rounded-md bg-gray-200 p-1"
-                  />
-                </div>
-                <div className="flex flex-col py-2">
-                  <label>Location</label>
-                  <input
-                    value={editDriver.location}
-                    name="location"
-                    type="text"
-                    autoComplete="off"
-                    onChange={(e) => handleEditChange(e)}
-                    required
-                    className="border rounded-md bg-gray-200 p-1"
-                  />
-                </div>
-                <div className="flex flex-col py-2">
-                  <label>Phone Number</label>
-                  <input
-                    value={editDriver.phoneNumber}
-                    name="phoneNumber"
-                    type="text"
-                    autoComplete="on"
-                    onChange={(e) => handleEditChange(e)}
-                    required
-                    className="border rounded-md bg-gray-200 p-1"
-                  />
-                </div>
-                <div className="flex flex-col py-2">
-                  <button className="border rounded-md w-full my-5 p-1 bg-pinkVariant hover:bg-fuchsia-700 text-white">
-                    EDIT
-                  </button>
-                </div>
-              </form>
-            </Box>
-          </Modal>
-        </Box>
-        <Box>
-          <Button
-            sx={{
-              fontSize: "14px",
-              fontWeight: "bold",
-              padding: "10px 20px",
-              background: "#E2E2E2",
-              margin: "5px",
-              color: "#C117BC",
-            }}
-            onClick={() => setOpenAdd(true)}
-          >
-            <FileDownload />
-            Export
-          </Button>
+          <Box>
+            <Button
+              sx={{
+                fontSize: "14px",
+                fontWeight: "bold",
+                padding: "10px 20px",
+                margin: "5px",
+                background: "#E2E2E2",
+                color: "#C117BC",
+              }}
+              onClick={() => setOpenAdd(true)}
+            >
+              <Add />
+              Add Driver
+            </Button>
+            <Modal
+              open={openAdd}
+              onClose={handleCloseAdd}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style2}>
+                <form
+                  onSubmit={(e) => handleEditClick(e)}
+                  className="max-w-[400px] w-full mx-auto bg-white p-4"
+                >
+                  <Box>
+                    <Typography>Add New Driver</Typography>
+                  </Box>
+                  <div className="flex flex-col py-2">
+                    <label>First Name</label>
+                    <input
+                      type="text"
+                      autoComplete="on"
+                      required
+                      name="firstName"
+                      className="border rounded-md bg-gray-200 p-1"
+                      placeholder="Enter Email"
+                      onChange={(e) => handleEditChange(e)}
+                    />
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <label>Last Name</label>
+                    <input
+                      type="text"
+                      autoComplete="on"
+                      onChange={(e) => handleEditChange(e)}
+                      required
+                      name="lastName"
+                      className="border rounded-md bg-gray-200 p-1"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <label>Email</label>
+                    <input
+                      type="text"
+                      autoComplete="on"
+                      onChange={(e) => handleEditChange(e)}
+                      required
+                      name="email"
+                      className="border rounded-md bg-gray-200 p-1"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <label>Location</label>
+                    <input
+                      name="location"
+                      type="text"
+                      autoComplete="off"
+                      onChange={(e) => handleEditChange(e)}
+                      required
+                      className="border rounded-md bg-gray-200 p-1"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <label>Phone Number</label>
+                    <input
+                      name="phoneNumber"
+                      type="text"
+                      autoComplete="on"
+                      onChange={(e) => handleEditChange(e)}
+                      required
+                      className="border rounded-md bg-gray-200 p-1"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <button className="border rounded-md w-full my-5 p-1 bg-pinkVariant hover:bg-fuchsia-700 text-white">
+                      Add New
+                    </button>
+                  </div>
+                </form>
+              </Box>
+            </Modal>
+          </Box>
+          <Box>
+            <Button
+              sx={{
+                fontSize: "14px",
+                fontWeight: "bold",
+                padding: "10px 20px",
+                background: "#E2E2E2",
+                margin: "5px",
+                color: "#C117BC",
+              }}
+              onClick={() => setOpenAdd(true)}
+            >
+              <FileDownload />
+              Export
+            </Button>
+          </Box>
         </Box>
       </Box>
+      {/* <Box>
+      <Box display="flex" borderRadius="3px" backgroundColor={"#E2E2E2"}>
+        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
+        <IconButton type="button" sx={{ p: 1 }} onChange={(e)=>handleSearchChnage(e)}>
+          <Search />
+        </IconButton>
       </Box>
-      <Box>
-        
-      </Box>
+      </Box> */}
       <Box
         m="40px 0 0 0"
         height="75vh"

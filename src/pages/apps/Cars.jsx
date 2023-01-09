@@ -1,9 +1,17 @@
 import { Box, Button, Modal, Typography, InputBase } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import Header from "../../components/Header";
-import { Add, Block, RemoveRedEye } from "@mui/icons-material";
+import {
+  Add,
+  Block,
+  Delete,
+  Edit,
+  RemoveRedEye,
+  RemoveRedEyeOutlined,
+} from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import axios from "../../assets/axios";
+import imageUser from "../../assets/istockphoto.jpg";
 
 const Cars = () => {
   const GET_DRIVERS_URL = "/api/v1/dashboard/car-table";
@@ -14,11 +22,41 @@ const Cars = () => {
       setDrivers(data);
     });
   });
+
+  const [shown, setShown] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
   const [loadId, setloadID] = useState({});
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
 
+  const [openAdd, setOpenAdd] = useState(false);
+  const handleCloseAdd = () => setOpenAdd(false);
+
+  const [openSuspend, setSuspendModal] = useState(false);
+  const handleCloseSuspend = () => setSuspendModal(false);
+
+  const [openDelete, setDeleteModal] = useState(false);
+  const handleCloseDelete = () => setDeleteModal(false);
+  const captureEdit = (clickedDriver) => {
+    setOpen(true);
+    let filtered = drivers.filter((driver) => driver.id === clickedDriver.id);
+    setloadID(filtered[0]);
+  };
+
   const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 800,
+    height: 370,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const style1 = {
     position: "absolute",
     top: "50%",
     left: "50%",
@@ -31,11 +69,94 @@ const Cars = () => {
     p: 4,
   };
 
+  const style2 = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 500,
+    height: 600,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const style3 = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 500,
+    height: 200,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const style5 = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 700,
+    height: 400,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+  const [editDriver, setEditdriver] = useState({
+    fullName: "",
+    phoneNumber: "",
+    location: "",
+  });
+
   const handleEdit = (e) => {
     e.preventdefault();
   };
 
+  const handleApprove = () => {
+    handleClose();
+    axios
+      .put(`/api/v1/admin/${loadId.id}/approve-driver`) //retriving the response
+      .then((res) => {
+        return setDrivers(...res.data());
+      })
+      .catch((err) => {
+        setErrMsg(err);
+      });
+  };
+
+  const handleSuspend = () => {
+    handleCloseSuspend();
+    axios
+      .post(`/api/v1/admin/${loadId.id}/suspend-driver`) //retriving the response
+      .then((res) => {
+        return setDrivers(...res.data());
+      })
+      .catch((err) => {
+        setErrMsg(err);
+      });
+  };
+
   const columns = [
+    {
+      /* Fix imaages here Now!!!!! */
+      field: "image",
+      headerName: "Image",
+      renderCell: ({ row: { image } }) => {
+        return (
+          <>
+            <Box>
+              <img width="40px" src={imageUser} alt="image" />
+            </Box>
+          </>
+        );
+      },
+    },
     {
       field: "make",
       headerName: "Make",
@@ -43,12 +164,7 @@ const Cars = () => {
     },
     {
       field: "model",
-      headerName: "Modal",
-      flex: 1,
-    },
-    {
-      field: "year",
-      headerName: "Year",
+      headerName: "Model",
       flex: 1,
     },
     {
@@ -120,102 +236,241 @@ const Cars = () => {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
               >
-                <Box sx={style}>
-                  <Box display="flex">
+                {loadId.activeOnHailingPlatforms ? (
+                  <Box sx={style}>
                     <Box
-                      display="flex"
+                      borderRadius="3px"
+                      color={"#C117BC"}
+                      marginBottom="5px"
+                    >
+                      <Typography fontSize="20px">
+                        <b>Car's Approval</b>
+                      </Typography>
+                    </Box>
+                    <Box className="grid grid-cols-2 sm:grid-cols-2 pt-0 w-full">
+                      <Box className="flex flex-col justify-center">
+                        <Box justifyContent="left" marginBottom="5px">
+                          <img
+                            width="100px"
+                            src={imageUser}
+                            alt="person's image"
+                          />
+                          <Typography>Modal: {loadId.model}</Typography>
+                          <Typography>Make: {loadId.make}</Typography>
+                          <Typography>Location: {loadId.city}</Typography>
+                          <Typography>
+                            Weekly Target: {loadId.weeklyTarget}
+                          </Typography>
+                        </Box>
+                        <Box margin="20px"></Box>
+                      </Box>
+                      <Box>
+                        <Box className="flex flex-col justify-center">
+                          <Box justifyContent="left" marginBottom="1px">
+                            <Box display="flex" justifyContent="space-between">
+                              <Typography>
+                                <Box marginBottom="30px">
+                                  <Box>
+                                    <Box>
+                                      <Typography>Add Credit</Typography>
+                                    </Box>
+                                    <Box
+                                      display="flex"
+                                      borderRadius="3px"
+                                      backgroundColor={"#E2E2E2"}
+                                      marginTop="10px"
+                                    >
+                                      <InputBase
+                                        sx={{ ml: 2, flex: 1 }}
+                                        type="number"
+                                        size="medium"
+                                        placeholder="Amount to Credit"
+                                        onChange={(e) => handleChange(e)}
+                                      />
+                                    </Box>
+                                  </Box>
+                                </Box>
+                              </Typography>
+                            </Box>
+                            <Box display="flex">
+                              <Box
+                                display="flex"
+                                borderRadius="3px"
+                                backgroundColor={"#C117BC"}
+                                marginTop="20px"
+                                justifyContent="right"
+                              >
+                                <Button onClick={() => handleCredit()}>
+                                  <Typography color="#fff">Add</Typography>
+                                </Button>
+                              </Box>
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Box>
+                    </Box>
+                    <Box display="flex" justifyContent="right">
+                      <Box>
+                        <Button onClick={() => setSuspendModal(true)}>
+                          <Block />
+                        </Button>
+                        <Modal
+                          open={openSuspend}
+                          onClose={handleCloseSuspend}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <Box sx={style3}>
+                            <Box>
+                              <Typography fontSize="20px">
+                                <b>Suspend Driver</b>
+                              </Typography>
+                            </Box>
+                            <Box>
+                              <Typography>
+                                Are you sure you want to Suspend{" "}
+                                {loadId.fullName}
+                              </Typography>
+                            </Box>
+                            <Box className="content-center">
+                              <Box>
+                                <button
+                                  onClick={() => handleSuspend()}
+                                  className="border rounded-md m-5 p-2 bg-red-600 hover:bg-red-700 text-white"
+                                >
+                                  Yes
+                                </button>
+                                <button
+                                  onClick={() => handleCloseSuspend()}
+                                  className="border rounded-md m-5 p-2 bg-black hover:bg-gray-700 text-white"
+                                >
+                                  No
+                                </button>
+                              </Box>
+                            </Box>
+                          </Box>
+                        </Modal>
+                      </Box>
+                      <Box>
+                        <Button onClick={() => setDeleteModal(true)}>
+                          <Delete />
+                        </Button>
+                        <Modal
+                          open={openDelete}
+                          onClose={handleCloseDelete}
+                          aria-labelledby="modal-modal-title"
+                          aria-describedby="modal-modal-description"
+                        >
+                          <Box sx={style3}>
+                            <Box>
+                              <Typography fontSize="20px">
+                                <b>Delete Driver</b>
+                              </Typography>
+                            </Box>
+                            <Box>
+                              <Typography>
+                                Are you sure you want to delete{" "}
+                                {loadId.fullName}
+                              </Typography>
+                            </Box>
+                            <Box
+                              display="flex"
+                              justify-content="left"
+                              className="content-center"
+                            >
+                              <Box>
+                                <button
+                                  onClick={() => handleDelete()}
+                                  className="border rounded-md m-5 p-2 bg-red-600 hover:bg-red-700 text-white"
+                                >
+                                  Yes
+                                </button>
+                                <button
+                                  onClick={() => handleCloseDelete()}
+                                  className="border rounded-md m-5 p-2 bg-black hover:bg-gray-700 text-white"
+                                >
+                                  No
+                                </button>
+                              </Box>
+                            </Box>
+                          </Box>
+                        </Modal>
+                      </Box>
+                    </Box>
+                  </Box>
+                ) : (
+                  <Box sx={style5}>
+                    <Box
                       borderRadius="3px"
                       color={"#C117BC"}
                       marginTop="20px"
                       marginBottom="20px"
                     >
-                      <Typography>Owner's Details</Typography>
+                      <Typography>Car's Documents</Typography>
                     </Box>
-                  </Box>
-                  <Box className="grid grid-cols-1 sm:grid-cols-2 pt-0 w-full">
-                    <Box justifyContent="left" marginBottom="5px">
-                      <Typography>
-                        Phone number: {loadId.phoneNumber}
-                      </Typography>
-                    </Box>
-                    <Box>
-                      <Box>
-                        <Box>
-                          <Typography>Add Credit to user</Typography>
+                    <Box className="grid grid-cols-2 sm:grid-cols-2 pt-0 w-full">
+                      <Box className="flex flex-col justify-center">
+                        <Box justifyContent="left" marginBottom="1px">
+                          <Typography>Documents Uploaded: 5</Typography>
+                          {drivers &&
+                            drivers.map((trans, i) => (
+                              <Box
+                                key={`${trans.id}-${i}`}
+                                display="flex"
+                                justifyContent="space-between"
+                                alignItems="center"
+                                borderBottom={`1px`}
+                              >
+                                <Box>
+                                  <Typography>Document {trans.id}</Typography>
+                                </Box>
+                                <Box>
+                                  <Typography>{trans.Modal}</Typography>
+                                </Box>
+                                <Button onClick={() => setShown(true)}>
+                                  <Typography>View</Typography>
+                                </Button>
+                              </Box>
+                            ))}
                         </Box>
-                        <Box
-                          display="flex"
-                          borderRadius="3px"
-                          backgroundColor={"#E2E2E2"}
-                          marginTop="10px"
-                        >
-                          <InputBase
-                            sx={{ ml: 2, flex: 1 }}
-                            placeholder="Add Credit amount"
-                            onChange={(e) => handleChange(e)}
-                          />
-                        </Box>
+                        <Box></Box>
                       </Box>
-                      <Box display="flex" justifyContent="right">
-                        <Box
-                          display="flex"
-                          borderRadius="3px"
-                          backgroundColor={"#C117BC"}
-                          marginTop="20px"
-                          justifyContent="right"
-                        >
-                          <Button onClick={() => handleCredit()}>
-                            <Typography color="#16161A">Add</Typography>
-                          </Button>
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Box>
-                  <Box display="flex">
-                    <Typography>
-                      <Box justifyContent="left" marginBottom="5px">
-                        <Typography>
-                          Phone number: {loadId.phoneNumber}
-                        </Typography>
-                        <Typography>
-                          User's Credit: {loadId.creditBalance}
-                        </Typography>
-                      </Box>
-                      <Box>
+                      <Box display="flex" margin="30px" justifyContent="right">
                         <Box>
                           <Box>
-                            <Typography>Add Credit to user</Typography>
-                          </Box>
-                          <Box
-                            display="flex"
-                            borderRadius="3px"
-                            backgroundColor={"#E2E2E2"}
-                            marginTop="10px"
-                          >
-                            <InputBase
-                              sx={{ ml: 2, flex: 1 }}
-                              placeholder="Add Credit amount"
-                              onChange={(e) => handleChange(e)}
-                            />
+                            <Typography>Approve Car</Typography>
                           </Box>
                         </Box>
-                        <Box display="flex" justifyContent="right">
+                        <Box display="flex">
                           <Box
                             display="flex"
-                            borderRadius="3px"
+                            borderRadius="2px"
                             backgroundColor={"#C117BC"}
-                            margin="20px"
+                            height="30px"
+                            margin="10px"
                             justifyContent="right"
                           >
                             <Button onClick={() => handleCredit()}>
-                              <Typography color="#16161A">Add</Typography>
+                              <Typography color="#16161A">Yes</Typography>
+                            </Button>
+                          </Box>
+                          <Box
+                            display="flex"
+                            borderRadius="2px"
+                            backgroundColor={"#16161A"}
+                            margin="10px"
+                            height="30px"
+                            justifyContent="right"
+                          >
+                            <Button onClick={() => handleCredit()}>
+                              <Typography color="#fff">No</Typography>
                             </Button>
                           </Box>
                         </Box>
                       </Box>
-                    </Typography>
+                    </Box>
                   </Box>
-                </Box>
+                )}
               </Modal>
             </Box>
           </>
@@ -241,7 +496,7 @@ const Cars = () => {
                 background: "#E2E2E2",
                 color: "#C117BC",
               }}
-              onClick={()=>handleAddModal()}
+              onClick={() => handleAddModal()}
             >
               <Add />
               Add Car
@@ -257,9 +512,9 @@ const Cars = () => {
                 background: "#E2E2E2",
                 color: "#C117BC",
               }}
-              onClick={()=>handleBlockModal()}
+              onClick={() => handleBlockModal()}
             >
-              <Block/>
+              <Block />
               Block Car
             </Button>
           </Box>
@@ -291,7 +546,11 @@ const Cars = () => {
           },
         }}
       >
-        <DataGrid rows={drivers} columns={columns} />
+        <DataGrid
+          onRowClick={(e) => captureEdit(e)}
+          rows={drivers}
+          columns={columns}
+        />
       </Box>
     </Box>
   );

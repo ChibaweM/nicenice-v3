@@ -30,6 +30,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     //function to send data to the database
     e.preventDefault();
+    navigate("/dashboard");
     axios.post(LOGIN_URL,{
       email: user,
       password: pwd,
@@ -38,7 +39,6 @@ const Login = () => {
       setAuth({ user, pwd, roles });
       setUser('');
       setPwd('');
-      navigate("/dashboard");
     }).catch((err)=>{
       if (!err?.response) {
         setErrMsg("No Server Response");
