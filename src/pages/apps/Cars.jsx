@@ -499,7 +499,7 @@ const Cars = () => {
               onClick={() => handleAddModal()}
             >
               <Add />
-              Add Car
+              Adds
             </Button>
           </Box>
           <Box>
