@@ -326,6 +326,7 @@ const Owners = () => {
               background: "#E2E2E2",
               color: "#C117BC",
             }}
+            onClick={() => handleAddModal()}
           >
             <Add />
             {/*  <DownloadOutlinedIcon sx={{ mr: "10px" }} /> */}

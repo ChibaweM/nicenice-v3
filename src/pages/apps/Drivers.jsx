@@ -676,7 +676,7 @@ const Drivers = () => {
                       required
                       name="firstName"
                       className="border rounded-md bg-gray-200 p-1"
-                      placeholder="Enter Email"
+                      placeholder="Enter First Name"
                       onChange={(e) => handleEditChange(e)}
                     />
                   </div>
@@ -688,6 +688,8 @@ const Drivers = () => {
                       onChange={(e) => handleEditChange(e)}
                       required
                       name="lastName"
+                      placeholder="Enter Last Name"
+
                       className="border rounded-md bg-gray-200 p-1"
                     />
                   </div>
@@ -698,6 +700,8 @@ const Drivers = () => {
                       autoComplete="on"
                       onChange={(e) => handleEditChange(e)}
                       required
+                      placeholder="Enter Email"
+
                       name="email"
                       className="border rounded-md bg-gray-200 p-1"
                     />
@@ -710,6 +714,7 @@ const Drivers = () => {
                       autoComplete="off"
                       onChange={(e) => handleEditChange(e)}
                       required
+                      placeholder="Enter Location"
                       className="border rounded-md bg-gray-200 p-1"
                     />
                   </div>
@@ -721,6 +726,7 @@ const Drivers = () => {
                       autoComplete="on"
                       onChange={(e) => handleEditChange(e)}
                       required
+                      placeholder="Enter Phone Number"
                       className="border rounded-md bg-gray-200 p-1"
                     />
                   </div>
