@@ -496,7 +496,7 @@ const Cars = () => {
                 background: "#E2E2E2",
                 color: "#C117BC",
               }}
-              onClick={() => handleAddModal()}
+              onClick={() => setOpenAdd(true)}
             >
               <Add />
               Add Cars

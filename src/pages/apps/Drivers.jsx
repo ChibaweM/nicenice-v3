@@ -749,7 +749,7 @@ const Drivers = () => {
                 margin: "5px",
                 color: "#C117BC",
               }}
-              onClick={() => setOpenAdd(true)}
+              onClick={() => setOpenAdd()}
             >
               <FileDownload />
               Export
