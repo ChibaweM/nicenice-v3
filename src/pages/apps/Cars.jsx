@@ -513,10 +513,10 @@ const Cars = () => {
                   className="max-w-[400px] w-full mx-auto bg-white p-4"
                 >
                   <Box>
-                    <Typography>Add New Driver</Typography>
+                    <Typography>Add New Car</Typography>
                   </Box>
                   <div className="flex flex-col py-2">
-                    <label>First Name</label>
+                    <label>Make</label>
                     <input
                       type="text"
                       autoComplete="on"
@@ -528,7 +528,7 @@ const Cars = () => {
                     />
                   </div>
                   <div className="flex flex-col py-2">
-                    <label>Last Name</label>
+                    <label>Make</label>
                     <input
                       type="text"
                       autoComplete="on"
@@ -541,7 +541,7 @@ const Cars = () => {
                     />
                   </div>
                   <div className="flex flex-col py-2">
-                    <label>Email</label>
+                    <label>Year</label>
                     <input
                       type="text"
                       autoComplete="on"
@@ -566,7 +566,7 @@ const Cars = () => {
                     />
                   </div>
                   <div className="flex flex-col py-2">
-                    <label>Phone Number</label>
+                    <label>Registration Number</label>
                     <input
                       name="phoneNumber"
                       type="text"

@@ -55,6 +55,20 @@ const Owners = () => {
     overflow: "hidden",
   };
 
+  const style2 = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 500,
+    height: 600,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+  };
+
+
   const handleEdit = (e) => {
     e.preventDefault();
   };
@@ -347,7 +361,7 @@ const Owners = () => {
                   className="max-w-[400px] w-full mx-auto bg-white p-4"
                 >
                   <Box>
-                    <Typography>Add New Driver</Typography>
+                    <Typography>Add New Owner</Typography>
                   </Box>
                   <div className="flex flex-col py-2">
                     <label>First Name</label>
