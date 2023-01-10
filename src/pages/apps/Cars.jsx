@@ -501,6 +501,90 @@ const Cars = () => {
               <Add />
               Add Cars
             </Button>
+            <Modal
+              open={openAdd}
+              onClose={handleCloseAdd}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style2}>
+                <form
+                  onSubmit={(e) => handleEditClick(e)}
+                  className="max-w-[400px] w-full mx-auto bg-white p-4"
+                >
+                  <Box>
+                    <Typography>Add New Driver</Typography>
+                  </Box>
+                  <div className="flex flex-col py-2">
+                    <label>First Name</label>
+                    <input
+                      type="text"
+                      autoComplete="on"
+                      required
+                      name="firstName"
+                      className="border rounded-md bg-gray-200 p-1"
+                      placeholder="Enter First Name"
+                      onChange={(e) => handleEditChange(e)}
+                    />
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <label>Last Name</label>
+                    <input
+                      type="text"
+                      autoComplete="on"
+                      onChange={(e) => handleEditChange(e)}
+                      required
+                      name="lastName"
+                      placeholder="Enter Last Name"
+
+                      className="border rounded-md bg-gray-200 p-1"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <label>Email</label>
+                    <input
+                      type="text"
+                      autoComplete="on"
+                      onChange={(e) => handleEditChange(e)}
+                      required
+                      placeholder="Enter Email"
+
+                      name="email"
+                      className="border rounded-md bg-gray-200 p-1"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <label>Location</label>
+                    <input
+                      name="location"
+                      type="text"
+                      autoComplete="off"
+                      onChange={(e) => handleEditChange(e)}
+                      required
+                      placeholder="Enter Location"
+                      className="border rounded-md bg-gray-200 p-1"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <label>Phone Number</label>
+                    <input
+                      name="phoneNumber"
+                      type="text"
+                      autoComplete="on"
+                      onChange={(e) => handleEditChange(e)}
+                      required
+                      placeholder="Enter Phone Number"
+                      className="border rounded-md bg-gray-200 p-1"
+                    />
+                  </div>
+                  <div className="flex flex-col py-2">
+                    <button className="border rounded-md w-full my-5 p-1 bg-pinkVariant hover:bg-fuchsia-700 text-white">
+                      Add New
+                    </button>
+                  </div>
+                </form>
+              </Box>
+            </Modal>
           </Box>
           <Box>
             <Button
