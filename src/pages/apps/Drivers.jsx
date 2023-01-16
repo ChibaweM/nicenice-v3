@@ -177,6 +177,23 @@ const Drivers = () => {
       });
   };
 
+  const handleNewClick = () => {
+    handleClose();
+    axios
+      .put("/api/v1/admin/" + loadId.id + "/edit-driver", {
+        fullName: editDriver.fullName,
+        phoneNumber: editDriver.phoneNumber,
+        location: editDriver.location,
+        creditBalance: loadId.creditBalance,
+      }) //retriving the response
+      .then((res) => {
+        return setDrivers(...res.data());
+      })
+      .catch((err) => {
+        setErrMsg(err);
+      });
+  };
+
   const [searchQuery, setsearchQuery] = useState("");
   function handleSearchChnage(e) {
     setsearchQuery(e.target.value);
@@ -661,10 +678,7 @@ const Drivers = () => {
               aria-describedby="modal-modal-description"
             >
               <Box sx={style2}>
-                <form
-                  onSubmit={(e) => handleEditClick(e)}
-                  className="max-w-[400px] w-full mx-auto bg-white p-4"
-                >
+                <form className="max-w-[400px] w-full mx-auto bg-white p-4">
                   <Box>
                     <Typography>Add New Driver</Typography>
                   </Box>
@@ -689,7 +703,6 @@ const Drivers = () => {
                       required
                       name="lastName"
                       placeholder="Enter Last Name"
-
                       className="border rounded-md bg-gray-200 p-1"
                     />
                   </div>
@@ -701,7 +714,6 @@ const Drivers = () => {
                       onChange={(e) => handleEditChange(e)}
                       required
                       placeholder="Enter Email"
-
                       name="email"
                       className="border rounded-md bg-gray-200 p-1"
                     />
@@ -731,7 +743,10 @@ const Drivers = () => {
                     />
                   </div>
                   <div className="flex flex-col py-2">
-                    <button className="border rounded-md w-full my-5 p-1 bg-pinkVariant hover:bg-fuchsia-700 text-white">
+                    <button
+                      onClick={() => handleEditClick(e)}
+                      className="border rounded-md w-full my-5 p-1 bg-pinkVariant hover:bg-fuchsia-700 text-white"
+                    >
                       Add New
                     </button>
                   </div>
