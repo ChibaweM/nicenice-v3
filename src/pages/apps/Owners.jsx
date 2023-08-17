@@ -7,6 +7,7 @@ import { Button, Typography, InputBase } from "@mui/material";
 import { Add, Delete, Edit, RemoveRedEye } from "@mui/icons-material";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import viewPDF from "../../assets/veiwPDF.pdf";
+import { mockBarData } from "../../data/mockData";
 
 const Owners = () => {
   const GET_DRIVERS_URL = "/api/v1/admin/owners";
@@ -152,12 +153,17 @@ const Owners = () => {
   const [shown, setShown] = useState(false);
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "id", 
+    headerName: "ID" },
+
     {
       field: "phoneNumber",
       headerName: "Phone Number",
       flex: 1,
+      // value: "text",
     },
+
+    
     {
       field: "creditBalance",
       headerName: "Credit Balance",
@@ -219,6 +225,7 @@ const Owners = () => {
               </Button>
               <Modal
                 open={open}
+
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
@@ -329,11 +336,11 @@ const Owners = () => {
     },
   ];
 
+  
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title="Owner" subtitle="Manage Owners" />
-
         <Box>
           <Button
             sx={{
@@ -347,7 +354,7 @@ const Owners = () => {
           >
             <Add />
             {/*  <DownloadOutlinedIcon sx={{ mr: "10px" }} /> */}
-            Add Owner
+            Add New Owner
           </Button>
           <Modal
               open={openAdd}
@@ -396,7 +403,6 @@ const Owners = () => {
                       onChange={(e) => handleEditChange(e)}
                       required
                       placeholder="Enter Email"
-
                       name="email"
                       className="border rounded-md bg-gray-200 p-1"
                     />
@@ -425,6 +431,7 @@ const Owners = () => {
                       className="border rounded-md bg-gray-200 p-1"
                     />
                   </div>
+
                   <div className="flex flex-col py-2">
                     <button className="border rounded-md w-full my-5 p-1 bg-pinkVariant hover:bg-fuchsia-700 text-white">
                       Add New
@@ -436,6 +443,7 @@ const Owners = () => {
         </Box>
       </Box>
       <Box
+
         m="40px 0 0 0"
         height="75vh"
         sx={{

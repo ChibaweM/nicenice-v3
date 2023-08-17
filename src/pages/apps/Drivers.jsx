@@ -203,7 +203,7 @@ const Drivers = () => {
           searchQuery
       )
       .then((res) => {
-        //console.log(res.data);
+        console.log(res.data);
         setDrivers(res.data);
       })
       .catch((error) => {

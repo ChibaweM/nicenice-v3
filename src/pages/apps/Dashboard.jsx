@@ -46,7 +46,7 @@ const Dashboard = () => {
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="Dashboard" subtitle="Welcome to your dashboard" />
+        <Header title="DASHBOARD" subtitle="" />
 
         <Box>
           <Button
@@ -54,8 +54,10 @@ const Dashboard = () => {
               fontSize: "14px",
               fontWeight: "bold",
               padding: "10px 20px",
-              background: "#E2E2E2",
-              color: "#C117BC",
+              // background: "#E2E2E2",
+              // color: "#C117BC",
+              background: "black", 
+               color: "#C117BC",
             }}
           >
             {/*  <DownloadOutlinedIcon sx={{ mr: "10px" }} /> */}
@@ -72,65 +74,50 @@ const Dashboard = () => {
         gap="35px"
       >
         {/* ROW 1 */}
-        <Box
+      <Box
           gridColumn="span 3"
           display="flex"
           alignItems="center"
           justifyContent="center"
-          backgroundColor={"#F5F6F8"}
+          // backgroundColor="rebeccapurple" 
+          backgroundColor="black"  
+          color={"#C117BC"}
         >
+         <a href="/Owners">
+          <center> 
           <StatBox
             title={drivers.newOwners}
+            // icon={<Person sx={{ fontSize: "26px" }} />}
             subtitle="New Owners"
             progress="0.75"
-            increase="+14%"
-            icon={<Person sx={{ fontSize: "26px" }} />}
-          />
-        </Box>
+            increase="+14%" 
+            
+          />  
+           {<Person sx={{ fontSize: "26px" }} />}
+          </center>
+          </a>
+      </Box>
+
         <Box
           gridColumn="span 3"
           display="flex"
           alignItems="center"
           justifyContent="center"
-          backgroundColor={"#F5F6F8"}
+          backgroundColor={"black"}
+          color={"#C117BC"}
         >
+        <a href="/Drivers" >
+          <center>
           <StatBox
             title={drivers.newDrivers}
             subtitle="New Drivers"
             progress="0.50"
             increase="+21%"
-            icon={<DriveEtaSharp sx={{ fontSize: "26px" }} />}
+            // icon={<DriveEtaSharp sx={{ fontSize: "26px" }} />}
           />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          backgroundColor={"#F5F6F8"}
-        >
-          <StatBox
-            title={drivers.totalUsers}
-            subtitle="Total Users"
-            progress="0.30"
-            increase="+5%"
-            icon={<Person2 sx={{ fontSize: "26px" }} />}
-          />
-        </Box>
-        <Box
-          gridColumn="span 3"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          backgroundColor={"#F5F6F8"}
-        >
-          <StatBox
-            title={drivers.approvedOwners}
-            subtitle="Approved Owners"
-            progress="0.80"
-            increase="+43%"
-            icon={<VerifiedUser sx={{ fontSize: "26px" }} />}
-          />
+          {<DriveEtaSharp sx={{ fontSize: "26px" }} />}
+          </center>
+          </a>
         </Box>
 
         <Box
@@ -138,61 +125,137 @@ const Dashboard = () => {
           display="flex"
           alignItems="center"
           justifyContent="center"
-          backgroundColor={"#F5F6F8"}
+          backgroundColor="black"
+          color={"#C117BC"}
         >
+          <a href="/Drivers"  >
+          <center>
+          <StatBox
+            title={drivers.totalUsers}
+            subtitle="Total Users"
+            progress="0.30"
+            increase="+5%"
+            // icon={<Person2 sx={{ fontSize: "26px" }} />}
+          />
+          {<Person2 sx={{ fontSize: "26px" }} />}
+          </center>
+          </a>
+        </Box>
+
+        <Box
+          gridColumn="span 3"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          backgroundColor={"black"}
+          color={"#C117BC"}
+        >
+          <a href="/Drivers"  >
+          <center>
+          <StatBox
+            title={drivers.approvedOwners}
+            subtitle="Approved Owners"
+            progress="0.80"
+            increase="+43%"
+            // icon={<VerifiedUser sx={{ fontSize: "26px" }} />}
+          />
+            {<VerifiedUser sx={{ fontSize: "26px" }} />}
+          </center>
+          </a>
+        </Box>
+
+        <Box
+          gridColumn="span 3"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          backgroundColor={"black"}
+          color={"#C117BC"}
+        >
+          <a href="/Drivers">
+          <center>
           <StatBox
             title={drivers.approvedDrivers}
             subtitle="Approved Drivers"
             progress="0.80"
             increase="+43%"
-            icon={<VerifiedUser sx={{ fontSize: "26px" }} />}
+            // icon={<VerifiedUser sx={{ fontSize: "26px" }} />}
           />
+          {<VerifiedUser sx={{ fontSize: "26px" }} />}
+          </center>
+          </a>
         </Box>
+
         <Box
           gridColumn="span 3"
           display="flex"
           alignItems="center"
           justifyContent="center"
-          backgroundColor={"#F5F6F8"}
+          // backgroundColor={"#F5F6F8"}
+          // color={"#C117BC"}
+          backgroundColor={"black"}
+          color={"#C117BC"}
         >
+           <a href="/Drivers">
+          <center>
           <StatBox
             title={drivers.niceNiceDeals}
             subtitle="Deals"
             progress="0.80"
             increase="+43%"
-            icon={<Shop sx={{ fontSize: "26px" }} />}
+            // icon={<Shop sx={{ fontSize: "26px" }} />}
           />
+          {<Shop sx={{ fontSize: "26px" }} />}
+          </center>
+          </a>
         </Box>
+        
         <Box
           gridColumn="span 3"
           display="flex"
           alignItems="center"
           justifyContent="center"
-          backgroundColor={"#F5F6F8"}
+          backgroundColor={"black"}
+          color={"#C117BC"}
         >
+           <a href="/Drivers">
+          <center>
           <StatBox
             title={drivers.webUsers}
             subtitle="Active Website Users"
             progress="0.80"
             increase="+43%"
-            icon={<DesktopMac sx={{ fontSize: "26px" }} />}
+            // icon={<DesktopMac sx={{ fontSize: "26px" }} />}
           />
+           {<DesktopMac sx={{ fontSize: "26px" }} />}
+           </center>
+           </a>
         </Box>
+
         <Box
           gridColumn="span 3"
           display="flex"
           alignItems="center"
           justifyContent="center"
-          backgroundColor={"#F5F6F8"}
+          backgroundColor={"black"}
+          color={"#C117BC"}
+        
         >
+          <a href="/Drivers">
+          <center>
           <StatBox
             title={drivers.mobileUsers}
             subtitle="Active Mobile Users"
             progress="0.80"
             increase="+43%"
-            icon={<Smartphone sx={{ fontSize: "26px" }} />}
+            href = "/Owners"
+            // icon={<Smartphone sx={{ fontSize: "26px" }} />}
           />
+           {<Smartphone sx={{ fontSize: "26px" }} />}
+           </center>
+           </a>
         </Box>
+
 
         {/* ROW 3 */}
         <Box gridColumn="span 8" gridRow="span 2" overflow="auto">

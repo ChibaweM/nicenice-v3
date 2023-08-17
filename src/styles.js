@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const styles = {
     boxWidth: "xl:max-w-[1280px] w-full",
   
@@ -24,5 +26,7 @@ const styles = {
   
     sectionInfo: `flex-1 ${styles.flexStart} flex-col`,
   };
-  
+
   export default styles;
+
+ 

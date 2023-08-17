@@ -6,6 +6,7 @@ import image1 from "../../assets/Vehicle1.png";
 import image3 from "../../assets/googlePlay.png";
 import useAuth from "../../hooks/useAuth";
 
+
 const LOGIN_URL = "/api/v1/auth/login";
 
 const Login = () => {
@@ -16,6 +17,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const [user, setUser] = useState("");
+  const [emailad, setEmail] = useState("")
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
@@ -36,8 +38,9 @@ const Login = () => {
       password: pwd,
     }).then((res)=>{
       const roles = res?.data?.roles;
-      setAuth({ user, pwd, roles });
+      setAuth({ user,emailad, pwd, roles });
       setUser('');
+      setEmail('');
       setPwd('');
     }).catch((err)=>{
       if (!err?.response) {
@@ -56,7 +59,10 @@ const Login = () => {
 
   return (
     <section className="bg-primary w-full text-black">
+      <div class="form_container">
       <div className="grid grid-cols-1 sm:grid-cols-2 pt-0 w-full">
+
+      <div className="form login_form">
         <div className="flex flex-col justify-center">
         <p
             ref={errRef}
@@ -66,7 +72,9 @@ const Login = () => {
             {errMsg}
           </p>
           <form onSubmit={(e) => handleSubmit(e)} className="max-w-[400px] w-full mx-auto bg-white p-4">
-            <h2 className="text-4xl font-bold text-center py-6">Email Login</h2>
+            <h2 className="text-4xl font-bold text-center py-6">Login</h2>
+           
+           
             <div className="flex flex-col py-2">
               <label>Username</label>
               <input
@@ -80,6 +88,8 @@ const Login = () => {
                 className="border rounded-md bg-gray-200 p-2"
               />
             </div>
+            <br></br>
+
             <div className="flex flex-col py-2">
               <label>Password</label>
               <input
@@ -92,17 +102,24 @@ const Login = () => {
                 className="border rounded-md bg-gray-200 p-2"
               />
             </div>
-            <button className="border rounded-md w-full my-5 py-2 bg-pinkVariant hover:bg-fuchsia-700 text-white">
-              Sign In
+
+            <button className="border rounded-md w-full my-5 py-2 bg-pinkVariant hover:bg-fuchsia-700 text-white" id="loginBtn" onClick="login()">
+              Log in
             </button>
-            {/* <div className="flex justify-between">
+
+            { <div className="flex justify-between">
               <p className="flex items-center">
                 <input className="mr-2" type="checkbox" /> Remember Me
               </p>
-            </div> */}
+            </div> }
+
+            <div class>
+              <p>Don't have an account? <a href="/Signup" onclick="Signup()">Signup</a></p>
+            </div>
           </form>
         </div>
-
+        </div>
+         
         <div className="hidden sm:block py-10 mx-10">
           <img className="object-cover bg-center pr-12 mb-5" src={image1} alt="carImage.png" />
           <div className="text-center">
@@ -122,8 +139,14 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </section>
+      </div>
+
+     
+    </section> 
   );
 };
 
+
 export default Login;
+
+

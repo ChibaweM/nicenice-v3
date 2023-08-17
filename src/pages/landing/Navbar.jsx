@@ -2,6 +2,8 @@ import React from "react";
 import logo from "../../assets/NiceNiceLogo.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
 
 const Navbar = () => {
   const [active, setActive] = useState("/")
@@ -10,7 +12,7 @@ const Navbar = () => {
   const navLinks = [
     {
       id: "/",
-      title: "Login",
+      title: "",
     },
   ];
 
@@ -22,8 +24,9 @@ const Navbar = () => {
   }
 
   return (
+    
     <nav className="w-full flex justify-between items-center navbar">
-      <img src={logo} alt="hoobank" width="124px" height="32px" />
+      {/* <img src={logo} alt="hoobank" width="124px" height="32px" />   */}
 
       <ul className="list-none sm:flex hidden justify-end items-center flex-1">
         {navLinks.map((nav, index) => (
@@ -40,7 +43,7 @@ const Navbar = () => {
           </li>
         ))}
       </ul>
-
+      
       <div className="sm:hidden flex flex-1 justify-end items-center">
         <img
           /* src={toggle ? close : menu} */
